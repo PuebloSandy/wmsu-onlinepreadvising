@@ -1,0 +1,24 @@
+.cards{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 2rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.cards-single{
+  display: flex;
+  justify-content: space-between;
+  background: #A9A9A9;
+  height: 7rem;
+  border-radius: 2px;
+  border: #c2c4ce solid 1px;
+  cursor: pointer;
+  font-size: 1.4rem;
+}
+
+.cards-single span{
+  padding: .5rem;
+}

@@ -1,0 +1,35 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap");
+
+* {
+  font-family: poppins;
+}
+
+body{
+    background-image: url("../images/bg2.png");
+    background-size: cover;
+}
+.navbar{
+  background-color: #308F6A;
+}
+
+.navbar-nav{
+  margin-left: auto;
+}
+.btn-success{
+  background-color: #308F6A;
+}
+#pre-ad{
+  font-size: 6vw;
+}
+#ics-logo{
+  width: 150px;
+  margin: auto;
+  display: block;
+  border: solid 3px #308F6A;
+  border-radius: 50%;
+}
+.card{
+  border-radius: 30px;
+  border: solid #308F6A;
+  overflow: hidden;
+}
