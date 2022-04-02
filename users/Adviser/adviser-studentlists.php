@@ -305,20 +305,25 @@
 								<select name="currid" class="form-control text-center" id="exampleFormControlSelect1">
 									<option value="0">Select Curriculum</option>
 									<?php 
-										$select_curri = mysqli_query($connection,"SELECT * FROM tblcurriculum WHERE college_id_fk='$collegeid' and course_id_fk='$courseid'");
-										if(mysqli_num_rows($select_curri))
+										$select_curri = mysqli_query($connection,"SELECT * FROM tblcurriculum WHERE status='1' and college_id_fk='$collegeid' and course_id_fk='$collegeid'");
+										while($cu = mysqli_fetch_array($select_curri))
 										{
-											foreach($select_curri as $c)
+											$curri_id_fk = $cu['id'];
+											$select_curri_sub = mysqli_query($connection,"SELECT curr_id_fk FROM tblsubject WHERE curr_id_fk='$curri_id_fk' and college_id_fk='$collegeid' and course_id_fk='$collegeid'");
+											if(mysqli_num_rows($select_curri_sub) > 0)
 											{
+												foreach($select_curri as $c)
+												{
 									?>
 											<option value="<?php echo $c['id'] ?>"><?php echo $c['curr_code']?></option>
 									<?php
 
+												}
 											}
-										}
-										else
-										{
-											echo "No Records Found!!";
+											else
+											{
+												echo "No Records Found!!";
+											}
 										}
 									?>
 								</select>
