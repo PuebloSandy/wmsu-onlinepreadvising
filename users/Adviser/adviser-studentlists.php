@@ -309,16 +309,14 @@
 										while($cu = mysqli_fetch_array($select_curri))
 										{
 											$curri_id_fk = $cu['id'];
-											$select_curri_sub = mysqli_query($connection,"SELECT curr_id_fk FROM tblsubject WHERE curr_id_fk='$curri_id_fk' and college_id_fk='$collegeid' and course_id_fk='$collegeid'");
+											$curr_code = $cu['curr_code'];
+											$select_curri_sub = mysqli_query($connection,"SELECT * FROM tblsubject WHERE curr_id_fk='$curri_id_fk' and college_id_fk='$collegeid' and course_id_fk='$collegeid'");
 											if(mysqli_num_rows($select_curri_sub) > 0)
 											{
-												foreach($select_curri as $c)
-												{
 									?>
-											<option value="<?php echo $c['id'] ?>"><?php echo $c['curr_code']?></option>
+											<option value="<?php echo $curri_id_fk ?>"><?php echo $curr_code ?></option>
 									<?php
 
-												}
 											}
 											else
 											{
