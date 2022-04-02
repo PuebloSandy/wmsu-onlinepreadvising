@@ -1,0 +1,153 @@
+<!-- Student Button View Account-->
+                    <div class="col text-center">
+                        <a id="tab3" class="btn my-4 border border-danger fw-bold text-center fs-3" onclick="studenttable()">Students</a>
+                    </div> 
+
+<!-- Student Table Account -->
+                <div id="student-table">
+                    <div class="mb-3" align="right">
+                        <button type="button" class="btn rounded btn-success p-2 fas fa-clipboard" title="Add" id="addStudent"> Add</button>
+                        <button type="button" class="btn rounded btn-danger p-2 fas fa-trash-alt" title="Delete All" id="deleteAllStudent"> Delete All</button>
+                    </div>
+            <?php
+                $check_student = mysqli_query($connection,"SELECT * FROM tbluser WHERE usertype='Student'");
+            ?>
+                    <table class="table table-striped" id="table3" width="100%">
+                        <thead class="text-white">
+                            <tr>
+                                <th hidden><center>Students ID</center></th>
+                                <th><center>Firstname</center></th>
+                                <th><center>Lastname</center></th>
+                                <th><center>Email</center></th>
+                                <th><center>Contact</center></th>
+                                <th hidden><center>Collegeid</center></th>
+                                <th hidden><center>Password</center></th>
+                                <th hidden><center>Courseid</center></th>
+                                <th><center>Action</center></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+            <?php
+                if(mysqli_num_rows($check_student) > 0)
+                {
+                    while($fa = mysqli_fetch_array($check_student))
+                    {
+                        $studentid = $fa['id'];
+                        $col_id = $fa['college_id_fk'];
+                        $cour_id = $fa['course_id_fk'];
+
+                        $get_col = mysqli_query($connection,"SELECT * FROM tblcollege WHERE id='$col_id'");
+                        while($col = mysqli_fetch_array($get_col))
+                        {
+                            $collegeName = $col['college'];
+                        }
+
+                        $get_cour = mysqli_query($connection,"SELECT * FROM tblcourse WHERE id='$cour_id'");
+                        while($cour = mysqli_fetch_array($get_cour))
+                        {
+                            $courseName = $cour['course'];
+                        }
+            ?>
+                    <tr>
+                        <td hidden><center><?php echo $studentid ?></center></td>
+                        <td><center><?php echo ucfirst($fa['firstname']); ?></center></td>
+                        <td><center><?php echo ucfirst($fa['lastname']); ?></center></td>
+                        <td><center><?php echo $fa['email']?></center></td>
+                        <td><center><?php echo $fa['contact']?></center></td>
+                        <td hidden><center><?php echo $collegeName?></center></td>
+                        <td hidden><center><?php echo $fa['password']?></center></td>
+                        <td hidden><center><?php echo $courseName?></center></td>
+                        <td><center><button style="font-size: 1.3rem;" title="Edit" class="fas fa-edit btn rounded btn-success editStudentbtn"></button>
+                            <button style="font-size: 1.3rem;" title="Delete" class="fas fa-trash-alt btn rounded btn-danger deleteStudentbtn"></button>
+                        </center></td>
+                    </tr>
+            <?php
+                    }
+                }
+                else
+                {
+                    echo'
+                    <tr>
+                        <td hidden></td>
+                        <td></td>
+                        <td></td>
+                        <td><center>No Data Found</center></td>
+                        <td></td>
+                        <td hidden></td>
+                        <td hidden></td>
+                        <td hidden></td>
+                        <td></td>
+                    </tr>
+                        ';
+                }
+            ?>
+                        </tbody>
+                        <tfoot >	
+                        </tfoot>
+                    </table>
+                </div>
+
+
+<script>
+	function studenttable(){
+            document.getElementById('admin-table').style.display='none'; 
+            document.getElementById('adviser-table').style.display='none'; 
+            document.getElementById('student-table').style.display='block'; 
+
+            document.getElementById('tab1').style.color = 'red'; 
+            document.getElementById('tab2').style.color = 'red'; 
+            document.getElementById('tab3').style.color = 'white'; 
+
+            document.getElementById('tab1').style.backgroundColor = 'white'; 
+            document.getElementById('tab2').style.backgroundColor = 'white'; 
+            document.getElementById('tab3').style.backgroundColor = 'red'; 
+
+            $('#table3').DataTable();
+
+            $('#addStudent').on('click', function() {
+                $('#addStudentModal').modal('show');
+            });
+
+            $('#deleteAllStudent').on('click', function() {
+                $('#deleteAllStudentModal').modal('show');
+            });
+
+            $(document).ready(function() {
+            $('body').on('click','.editStudentbtn',function() {
+                $('#editStudentModal').modal('show');
+
+                $tr = $(this).closest('tr');
+
+                var data = $tr.children('td').map(function() {
+                    return $(this).text();
+                }).get();
+
+                console.log(data);
+
+                $('#studentid').val(data[0]);
+                $('#student-firstname').val(data[1]);
+                $('#student-lastname').val(data[2]);
+                $('#student-email').val(data[3]);
+                $('#student-contact').val(data[4]);
+                $('#student-col').val(data[5]);
+                $('#passeditstudent').val(data[6]);
+                $('#student-cour').val(data[7]);
+            });
+            });
+
+            $(document).ready(function() {
+            $('body').on('click','.deleteStudentbtn',function() {
+                $('#deleteStudentModal').modal('show');
+    
+                $tr = $(this).closest('tr');
+    
+                var data = $tr.children('td').map(function() {
+                    return $(this).text();
+                }).get();
+    
+                console.log(data);
+                $('#student_id').val(data[0]);
+            });
+            });
+        }
+</script>
