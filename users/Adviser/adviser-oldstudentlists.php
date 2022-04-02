@@ -375,7 +375,7 @@
 								</div>
 								<div class="col-5">
 									<label for="input-name" class="form-label">M.I</label>
-									<input type="text" name="middle" class="form-control text-center" placeholder="Enter M.I" id="input-name" aria-describedby="input-name-help" autocomplete="off" required>
+									<input type="text" name="middle" class="form-control text-center" placeholder="Enter M.I" id="input-name" aria-describedby="input-name-help" autocomplete="off">
 								</div>
 							</div>
 
