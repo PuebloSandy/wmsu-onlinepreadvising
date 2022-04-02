@@ -268,7 +268,7 @@ if(isset($_SESSION['login_user']))
 
                         <div class="mb-3">
                             <label for="input-seal" class="form-label">College Seal</label>
-                            <input type="file" name="image" class="form-control" id="seal" aria-describedby="input-sectionID-help" required>
+                            <input type="file" name="image" class="form-control" id="seal" aria-describedby="input-sectionID-help">
                         </div>         
                     </div>
 
