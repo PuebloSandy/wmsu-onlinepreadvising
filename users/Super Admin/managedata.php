@@ -342,7 +342,7 @@ if(isset($_POST['update_password']))
 		if(mysqli_num_rows($check_collegename_run) > 0)
 		{
 			$_SESSION['status'] = "Already Existed";
-            $_SESSION['status_code'] = "info"; 
+            $_SESSION['status_code'] = "warning"; 
 			header("location: superadmin-departments.php");
 		}
 		else if(mysqli_num_rows($check_collegecode_run) > 0)
@@ -354,7 +354,7 @@ if(isset($_POST['update_password']))
 		else if(file_exists("../../source/upload/college_seal/" .$_FILES["image"]["name"]))
 		{
 		    $_SESSION['status'] = "Already Existed";
-            $_SESSION['status_code'] = "info"; 
+            $_SESSION['status_code'] = "warning"; 
 			header("location:superadmin-departments.php");
 		}
 		else
@@ -418,7 +418,7 @@ if(isset($_POST['update_password']))
 		{
 			if(file_exists("../../source/upload/college_seal/" .$_FILES["image"]["name"])){
 				$_SESSION['status'] = "Already Existed";
-            	$_SESSION['status_code'] = "info"; 
+            	$_SESSION['status_code'] = "warning"; 
 				header("location:superadmin-departments.php");
 			}
 			else{
