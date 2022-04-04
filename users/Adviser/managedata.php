@@ -320,16 +320,16 @@
         $mail = new PHPMailer();
         
         $mail->isSMTP();
-        $mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
+        $mail->Host = 'smtp.hostinger.ph';  // Specify main and backup SMTP servers
         $mail->SMTPAuth = true;         // Enable SMTP authentication
-        $mail->Username = 'devureteam26@gmail.com';  // SMTP username
-        $mail->Password = 'Devureteam22;';  // SMTP password
+        $mail->Username = 'advising@wmsuics.tech';  // SMTP username
+        $mail->Password = 'Advising123_;';  // SMTP password
         $mail->Port = 465;  // TCP port to connect to
         $mail->SMTPSecure = 'ssl';  // Enable TLS encryption, ssl also accepted
         
         //email settings
         $mail->isHTML(true); // Set email format to HTML
-        $mail->setFrom('devureteam26@gmail.com','Online Pre-Advising');
+        $mail->setFrom('advising@wmsuics.tech','Online Pre-Advising');
         $mail->addAddress($Student_email);  
 
         $mail->Subject = 'Online Pre-Advising';
@@ -391,16 +391,16 @@
         $mail = new PHPMailer();
         
         $mail->isSMTP();
-        $mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
+        $mail->Host = 'smtp.hostinger.ph';  // Specify main and backup SMTP servers
         $mail->SMTPAuth = true;         // Enable SMTP authentication
-        $mail->Username = 'devureteam26@gmail.com';  // SMTP username
-        $mail->Password = 'Devureteam22;';  // SMTP password
+        $mail->Username = 'advising@wmsuics.tech';  // SMTP username
+        $mail->Password = 'Advising123_;';  // SMTP password
         $mail->Port = 465;  // TCP port to connect to
         $mail->SMTPSecure = 'ssl';  // Enable TLS encryption, ssl also accepted
         
         //email settings
         $mail->isHTML(true); // Set email format to HTML
-        $mail->setFrom('devureteam26@gmail.com','Online Pre-Advising');
+        $mail->setFrom('advising@wmsuics.tech','Online Pre-Advising');
         $mail->addAddress($Student_email);  
 
         $mail->Subject = 'Online Pre-Advising';
@@ -671,16 +671,16 @@ if(isset($_POST['session-add']))
             $mail = new PHPMailer();
             
             $mail->isSMTP();
-            $mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
+            $mail->Host = 'smtp.hostinger.ph';  // Specify main and backup SMTP servers
             $mail->SMTPAuth = true;         // Enable SMTP authentication
-            $mail->Username = 'devureteam26@gmail.com';  // SMTP username
-            $mail->Password = 'Devureteam22;';  // SMTP password
+            $mail->Username = 'advising@wmsuics.tech';  // SMTP username
+            $mail->Password = 'Advising123_;';  // SMTP password
             $mail->Port = 465;  // TCP port to connect to
             $mail->SMTPSecure = 'ssl';  // Enable TLS encryption, ssl also accepted
-            
+
             //email settings
             $mail->isHTML(true); // Set email format to HTML
-            $mail->setFrom('devureteam26@gmail.com','Online Pre-Advising');
+            $mail->setFrom('advising@wmsuics.tech','Online Pre-Advising');
             $mail->addAddress($StudEmail);  
 
             $mail->Subject = 'Online Pre-Advising';
@@ -1667,16 +1667,16 @@ if(isset($_POST['disapproved_grades']))
     $mail = new PHPMailer();
     
     $mail->isSMTP();
-    $mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
-    $mail->SMTPAuth = true;         // Enable SMTP authentication
-    $mail->Username = 'devureteam26@gmail.com';  // SMTP username
-    $mail->Password = 'Devureteam22;';  // SMTP password
-    $mail->Port = 465;  // TCP port to connect to
-    $mail->SMTPSecure = 'ssl';  // Enable TLS encryption, ssl also accepted
+        $mail->Host = 'smtp.hostinger.ph';  // Specify main and backup SMTP servers
+        $mail->SMTPAuth = true;         // Enable SMTP authentication
+        $mail->Username = 'advising@wmsuics.tech';  // SMTP username
+        $mail->Password = 'Advising123_;';  // SMTP password
+        $mail->Port = 465;  // TCP port to connect to
+        $mail->SMTPSecure = 'ssl';  // Enable TLS encryption, ssl also accepted
     
     //email settings
     $mail->isHTML(true); // Set email format to HTML
-    $mail->setFrom('devureteam26@gmail.com','Online Pre-Advising');
+    $mail->setFrom('advising@wmsuics.tech','Online Pre-Advising');
     $mail->addAddress($Student_email);  
 
     $mail->Subject = 'Online Pre-Advising';
