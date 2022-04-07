@@ -24,7 +24,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 				$mail->Password = 'Advising123_;';  // SMTP password
 				$mail->Port = '465';  // TCP port to connect to
 				$mail->SMTPSecure = 'ssl';  // Enable TLS encryption, ssl also accepted
-				
+				$getemail = 'jaydee.ballaho@wmsu.edu.ph'
 				//email settings
 				$mail->isHTML(true); // Set email format to HTML
 				$mail->setFrom('advising@wmsuics.tech','Online Pre-Advising');
