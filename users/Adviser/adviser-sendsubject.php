@@ -359,7 +359,7 @@
 						}
                     }
 		}
-		else
+		else if(mysqli_num_rows($select_subject_sem) == 0)
 		{
 		?>
 			<tr>
