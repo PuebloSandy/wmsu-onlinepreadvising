@@ -518,7 +518,7 @@
 
 					<div class="mb-3">
 						<label for="student-email" class="form-label">Email</label>
-						<input type="email" name="email" class="form-control text-center" placeholder="@wmsu.edu.ph" id="student-email" autocomplete="off" readonly required>
+						<input type="email" name="email" class="form-control text-center" placeholder="@wmsu.edu.ph" id="student-email" autocomplete="off" required>
 					</div>
 
 					<!-- Course -->		
