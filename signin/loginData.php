@@ -3,6 +3,14 @@
    require("../source/includes/config.php");
    require("../source/includes/alertmessage.php");
    
+   if ($_SERVER["REQUEST_METHOD"] == "POST") {
+      
+      $emailname = $_POST['testemail'];
+      if (empty($emailname)) {
+        echo "Email Test";
+      }
+    }
+
    if($_SERVER["REQUEST_METHOD"] == "POST"){
       // email and password sent from form 
       $myemail = mysqli_real_escape_string($connection,$_POST['email']);

@@ -68,7 +68,7 @@
 				$mail->SMTPAuth = true;         // Enable SMTP authentication
 				$mail->Username = 'advising@wmsuics.tech';  // SMTP username
 				$mail->Password = 'Advising123_;';  // SMTP password
-				$mail->Port = 465;  // TCP port to connect to
+				$mail->Port = '465';  // TCP port to connect to
 				$mail->SMTPSecure = 'ssl';  // Enable TLS encryption, ssl also accepted
 				
 				//email settings
