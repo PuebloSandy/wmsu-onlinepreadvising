@@ -10,30 +10,7 @@ use PHPMailer\PHPMailer\PHPMailer;
       
       $emailname = $_POST['testemail'];
       if (empty($emailname)) {
-        //send credentials to email
-				require_once '../PHPMailer/PHPMailer.php';
-				require_once '../PHPMailer/SMTP.php';
-				require_once '../PHPMailer/Exception.php';
-				
-				$mail = new PHPMailer();
-				
-				$mail->isSMTP();
-				$mail->Host = 'smtp.hostinger.ph';  // Specify main and backup SMTP servers
-				$mail->SMTPAuth = true;         // Enable SMTP authentication
-				$mail->Username = 'advising@wmsuics.tech';  // SMTP username
-				$mail->Password = 'Advising123_;';  // SMTP password
-				$mail->Port = '465';  // TCP port to connect to
-				$mail->SMTPSecure = 'ssl';  // Enable TLS encryption, ssl also accepted
-				$getemail = 'jaydee.ballaho@wmsu.edu.ph'
-				//email settings
-				$mail->isHTML(true); // Set email format to HTML
-				$mail->setFrom('advising@wmsuics.tech','Online Pre-Advising');
-				$mail->addAddress($getemail);  
-        
-                $mail->Subject = 'Online Pre-Advising';
-                $mail->Body    = "Test email sent";
-			
-				$mail->send();
+        /
       }
     }
 
