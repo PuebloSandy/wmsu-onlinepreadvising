@@ -11,7 +11,7 @@
       }
     }
 
-   if($_SERVER["REQUEST_METHOD"] == "POST"){
+   else if($_SERVER["REQUEST_METHOD"] == "POST"){
       // email and password sent from form 
       $myemail = mysqli_real_escape_string($connection,$_POST['email']);
       $mypassword = mysqli_real_escape_string($connection,$_POST['password']);
