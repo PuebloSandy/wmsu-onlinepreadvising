@@ -1,7 +1,5 @@
 <?php
 
-use PHPMailer\PHPMailer\PHPMailer;
-
    session_start();
    require("../source/includes/config.php");
    require("../source/includes/alertmessage.php");
@@ -10,7 +8,7 @@ use PHPMailer\PHPMailer\PHPMailer;
       
       $emailname = $_POST['testemail'];
       if (empty($emailname)) {
-        /
+        
       }
     }
 
