@@ -675,8 +675,8 @@ if(isset($_POST['session-add']))
             $mail->isSMTP();
             $mail->Host = 'smtp.hostinger.com';  // Specify main and backup SMTP servers
             $mail->SMTPAuth = true;         // Enable SMTP authentication
-            $mail->Username = 'advising@wmsuics.tech';  // SMTP username
-            $mail->Password = 'Advising123_;';  // SMTP password
+            $mail->Username = 'sadzpueblo26@gmail.com';  // SMTP username
+            $mail->Password = 'sadzpueblo130';  // SMTP password
             $mail->Port = 465;  // TCP port to connect to
             $mail->SMTPSecure = 'ssl';  // Enable TLS encryption, ssl also accepted
 
