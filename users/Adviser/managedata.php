@@ -742,7 +742,7 @@ if(isset($_POST['session-add']))
             {
                 $_SESSION['status'] = "Unsuccessfully Send.Please Check your input or Contact the Personnel incharge!!";
                 $_SESSION['status_code'] = "error";
-              
+                echo "check-".$mail;
             }
         }
     }
