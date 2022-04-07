@@ -65,7 +65,6 @@
 							<span id="spnWarning" style='display:none;color:red'>WARNING! Caps lock is ON.</span>
 							<!-- LOGIN BUTTON -->
 							<button type="submit" name="login" id="login" class="btn solid">Login</button>
-							<button type="submit" name="testemail" id="testemail" class="btn solid">Test Email</button>
 
 							<p class="request-text">Don't have an account?<br />Request a student or staff account</p>
 							<!-- REQUEST ICONS -->
