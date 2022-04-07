@@ -358,7 +358,22 @@
             <?php
 						}
                     }
-                }
+		}
+		else
+		{
+		?>
+			<tr>
+				<td></td>
+				<td hidden></td>
+				<td></td>
+				<td></td>
+				<td><center>Already Have the Subjects.</center></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+		<?php
+		}
             ?>
                     </tbody>
                     <tfoot >	
