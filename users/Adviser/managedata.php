@@ -203,7 +203,7 @@
             $curri = $fa['curri_id_fk'];
         }
 
-        if($curri_id == $curri && $Firstname == $firstname && $Lastname == $lastname && $Middle == $middle && $Suffix == $suffix && $Status == $status && $Student_status == $student_status && $Contact == $contact && $Courseid == $courseid)
+        if($curri_id == $curri && $Firstname == $firstname && $Lastname == $lastname && $Middle == $middle && $Email == $email && $Suffix == $suffix && $Status == $status && $Student_status == $student_status && $Contact == $contact && $Courseid == $courseid)
         {
             $_SESSION['status'] = "Nothing To Be Updated!!";
             $_SESSION['status_code'] = "info";
