@@ -595,7 +595,7 @@ if(isset($_POST['session-add']))
         $update_status = "UPDATE tbladviser_send_sub_to_stud SET status='$Approved' WHERE adviser_id_fk='$Adviserid' and student_id_fk='$Studid' and curri_id_fk='$Currid' and course_id_fk='$Courseid'";
         if(mysqli_query($connection,$update_status)){}
 
-        $get_student = mysqli_query($connection,"SELECT * FROM tblstudent_list WHERE id='$Studid'");
+        $get_student = mysqli_query($connection,"SELECT * FROM tblstudent_list WHERE id='$Studid' and status'Enrolled'");
         while($s=mysqli_fetch_array($get_student))
         {
             $StudEmail = $s['email'];
@@ -673,16 +673,16 @@ if(isset($_POST['session-add']))
             $mail = new PHPMailer();
             
             $mail->isSMTP();
-            $mail->Host = 'smtp.hostinger.ph';  // Specify main and backup SMTP servers
+            $mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
             $mail->SMTPAuth = true;         // Enable SMTP authentication
-            $mail->Username = 'advising@wmsuics.tech';  // SMTP username
-            $mail->Password = 'Advising123_;';  // SMTP password
+            $mail->Username = 'devureteam26@gmail.com';  // SMTP username
+            $mail->Password = 'Devureteam22;';  // SMTP password
             $mail->Port = 465;  // TCP port to connect to
             $mail->SMTPSecure = 'ssl';  // Enable TLS encryption, ssl also accepted
 
             //email settings
             $mail->isHTML(true); // Set email format to HTML
-            $mail->setFrom('advising@wmsuics.tech','Online Pre-Advising');
+            $mail->setFrom('devureteam26@gmail.com','Online Pre-Advising');
             $mail->addAddress($StudEmail);  
 
             $mail->Subject = 'Online Pre-Advising';
@@ -736,13 +736,13 @@ if(isset($_POST['session-add']))
             if($mail->send()){
                 $_SESSION['status'] = "Successfully Send!!";
                 $_SESSION['status_code'] = "success";
-                header("location:adviser-sendsubject.php");
+                
             }
             else
             {
                 $_SESSION['status'] = "Unsuccessfully Send.Please Check your input or Contact the Personnel incharge!!";
                 $_SESSION['status_code'] = "error";
-                header("location:adviser-sendsubject.php");
+                echo "check-".$mail;
             }
         }
     }
