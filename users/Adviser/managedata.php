@@ -136,8 +136,9 @@
         $LASTNAME = ucfirst($Lastname);
         $MIDDLE = ucfirst($Middle).'.';
         $SUFFIX = ucfirst($Suffix);
+        $Status = "Enrolled";
 
-        $check_email = mysqli_query($connection,"SELECT email FROM tblstudent_list WHERE email='$Email' and curri_id_fk='$curriculum'");
+        $check_email = mysqli_query($connection,"SELECT email FROM tblstudent_list WHERE status='$Status' and email='$Email' and curri_id_fk='$curriculum'");
         if(mysqli_num_rows($check_email) > 0)
         {
             $get = mysqli_fetch_array($check_email);
@@ -187,8 +188,9 @@
         $MIDDLE = ucfirst($Middle);
         $LASTNAME = ucfirst($Lastname);
         $SUFFIX = ucfirst($Suffix);
+        $Status = "Enrolled";
 
-        $Check_info = mysqli_query($connection,"SELECT * FROM tblstudent_list WHERE id='$Studentid'");
+        $Check_info = mysqli_query($connection,"SELECT * FROM tblstudent_list WHERE id='$Studentid' and status='$Status'");
         while($fa=mysqli_fetch_array($Check_info))
         {
             $firstname = $fa['firstname'];
