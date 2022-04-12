@@ -335,7 +335,7 @@
                             $yrlvl = "5th";
                         }
 
-						$check_get_subid = mysqli_query($connection,"SELECT remarks FROM tbladviser_presubject WHERE remarks in ('PASSED','') and adviser_id_fk='$adviserid' and student_id='$Studid' and subject_id_fk='$subjectID' and curri_id='$Currid' and course_id_fk='$courseid'");
+						$check_get_subid = mysqli_query($connection,"SELECT remarks FROM tbladviser_presubject WHERE remarks in ('PASSED') and adviser_id_fk='$adviserid' and student_id='$Studid' and subject_id_fk='$subjectID' and curri_id='$Currid' and course_id_fk='$courseid'");
 						while($k=mysqli_fetch_array($check_get_subid))
 						{
 							$Send_subID = $k['subject_id_fk'];
