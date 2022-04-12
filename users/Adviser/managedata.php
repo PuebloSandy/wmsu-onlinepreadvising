@@ -668,7 +668,7 @@ if(isset($_POST['session-add']))
             
             $mail = new PHPMailer;
             
-            $mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
+            $mail->Host = 'smtp.hostinger.ph';  // Specify main and backup SMTP servers
             $mail->SMTPAuth = true;         // Enable SMTP authentication
             $mail->Username = 'info@wmsuics.tech';  // SMTP username
             $mail->Password = 'tracking_MARK01';  // SMTP password
@@ -677,7 +677,7 @@ if(isset($_POST['session-add']))
 
             //email settings
             $mail->isHTML(true); // Set email format to HTML
-            $mail->setFrom('advising@wmsuics.tech','Online Pre-Advising');
+            $mail->setFrom('info@wmsuics.tech','Online Pre-Advising');
             $mail->addAddress($StudEmail);  
 
             $mail->Subject = 'Online Pre-Advising';
