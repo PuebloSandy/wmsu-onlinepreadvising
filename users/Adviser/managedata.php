@@ -1,6 +1,4 @@
 <?php
-    use PHPMailer\PHPMailer\PHPMailer;
-
     session_start();
     include "../../source/includes/config.php";
     include("../../source/includes/alertmessage.php");
@@ -666,19 +664,16 @@ if(isset($_POST['session-add']))
             }
 
             //send credentials to email
-            require_once '../../PHPMailer/PHPMailer.php';
-            require_once '../../PHPMailer/SMTP.php';
-            require_once '../../PHPMailer/Exception.php';
+            require '../../phpmailer/PHPMailerAutoload.php';
             
             $mail = new PHPMailer();
             
-            $mail->isSMTP();
             $mail->Host = 'smtp.hostinger.com';  // Specify main and backup SMTP servers
             $mail->SMTPAuth = true;         // Enable SMTP authentication
-            $mail->Username = 'sadzpueblo26@gmail.com';  // SMTP username
-            $mail->Password = 'sadzpueblo130';  // SMTP password
-            $mail->Port = 465;  // TCP port to connect to
-            $mail->SMTPSecure = 'ssl';  // Enable TLS encryption, ssl also accepted
+            $mail->Username = 'advising@wmsuics.tech';  // SMTP username
+            $mail->Password = 'Advising123_;';  // SMTP password
+            $mail->Port = 587;  // TCP port to connect to
+            $mail->SMTPSecure = 'tls';  // Enable TLS encryption, ssl also accepted
 
             //email settings
             $mail->isHTML(true); // Set email format to HTML
@@ -736,13 +731,13 @@ if(isset($_POST['session-add']))
             if($mail->send()){
                 $_SESSION['status'] = "Successfully Send!!";
                 $_SESSION['status_code'] = "success";
-                
+                header("location:adviser-sendsubject.php");
             }
             else
             {
                 $_SESSION['status'] = "Unsuccessfully Send.Please Check your input or Contact the Personnel incharge!!";
                 $_SESSION['status_code'] = "error";
-                echo "check-".$mail;
+                header("location:adviser-sendsubject.php");
             }
         }
     }
