@@ -666,12 +666,12 @@ if(isset($_POST['session-add']))
             //send credentials to email
             require '../../phpmailer/PHPMailerAutoload.php';
             
-            $mail = new PHPMailer();
+            $mail = new PHPMailer;
             
-            $mail->Host = 'smtp.hostinger.com';  // Specify main and backup SMTP servers
+            $mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
             $mail->SMTPAuth = true;         // Enable SMTP authentication
-            $mail->Username = 'advising@wmsuics.tech';  // SMTP username
-            $mail->Password = 'Advising123_;';  // SMTP password
+            $mail->Username = 'info@wmsuics.tech';  // SMTP username
+            $mail->Password = 'tracking_MARK01';  // SMTP password
             $mail->Port = 587;  // TCP port to connect to
             $mail->SMTPSecure = 'tls';  // Enable TLS encryption, ssl also accepted
 
