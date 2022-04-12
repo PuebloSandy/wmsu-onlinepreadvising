@@ -1,4 +1,8 @@
 <?php
+    use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\SMTP;
+    use PHPMailer\PHPMailer\Exception;
+
     session_start();
     include "../../source/includes/config.php";
     include("../../source/includes/alertmessage.php");
@@ -664,10 +668,13 @@ if(isset($_POST['session-add']))
             }
 
             //send credentials to email
-            require '../../phpmailer/PHPMailerAutoload.php';
+            require_once '../../PHPMailer/PHPMailer.php';
+            require_once '../../PHPMailer/SMTP.php';
+            require_once '../../PHPMailer/Exception.php';
             
-            $mail = new PHPMailer;
+            $mail = new PHPMailer();
             
+            $mail->isSMTP();
             $mail->Host = 'smtp.hostinger.ph';  // Specify main and backup SMTP servers
             $mail->SMTPAuth = true;         // Enable SMTP authentication
             $mail->Username = 'info@wmsuics.tech';  // SMTP username
