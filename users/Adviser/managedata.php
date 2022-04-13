@@ -1,5 +1,4 @@
 <?php
-    use PHPMailer\PHPMailer\PHPMailer;
 
     session_start();
     include "../../source/includes/config.php";
@@ -666,18 +665,15 @@ if(isset($_POST['session-add']))
             }
 
             //send credentials to email
-            require_once '../../PHPMailer/PHPMailer.php';
-            require_once '../../PHPMailer/SMTP.php';
-            require_once '../../PHPMailer/Exception.php';
+            require '../../phpmailer/PHPMailerAutoload.php';
             
-            $mail = new PHPMailer();
+            $mail = new PHPMailer;
             
-            $mail->isSMTP();
             $mail->Host = 'smtp.hostinger.ph';  // Specify main and backup SMTP servers
             $mail->SMTPAuth = true;         // Enable SMTP authentication
             $mail->Username = 'advising@wmsuics.tech';  // SMTP username
             $mail->Password = 'Advising123_';  // SMTP password
-            $mail->Port = 465;  // TCP port to connect to
+            $mail->Port = 587;  // TCP port to connect to
             $mail->SMTPSecure = 'ssl';  // Enable TLS encryption, ssl also accepted
 
             //email settings
