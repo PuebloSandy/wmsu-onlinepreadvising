@@ -684,7 +684,7 @@ if(isset($_POST['session-add']))
             //email settings
             $mail->isHTML(true); // Set email format to HTML
             $mail->setFrom('advising@wmsuics.tech','Online Pre-Advising');
-            $mail->addAddress($StudEmail);  
+            $mail->addAddress('sn201303420@wmsu.edu.ph');  
 
             $mail->Subject = 'Online Pre-Advising';
             $mail->Body    = "<p>Greetings Student: <br><br> 
