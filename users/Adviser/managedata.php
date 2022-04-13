@@ -596,7 +596,7 @@ if(isset($_POST['session-add']))
         $update_status = "UPDATE tbladviser_send_sub_to_stud SET status='$Approved' WHERE adviser_id_fk='$Adviserid' and student_id_fk='$Studid' and curri_id_fk='$Currid' and course_id_fk='$Courseid'";
         if(mysqli_query($connection,$update_status)){}
 
-        $get_student = mysqli_query($connection,"SELECT * FROM tblstudent_list WHERE id='$Studid' and status'Enrolled'");
+        $get_student = mysqli_query($connection,"SELECT * FROM tblstudent_list WHERE id='$Studid'");
         while($s=mysqli_fetch_array($get_student))
         {
             $StudEmail = $s['email'];
@@ -684,7 +684,7 @@ if(isset($_POST['session-add']))
             //email settings
             $mail->isHTML(true); // Set email format to HTML
             $mail->setFrom('advising@wmsuics.tech','Online Pre-Advising');
-            $mail->addAddress('sn201303420@wmsu.edu.ph');  
+            $mail->addAddress($StudEmail);  
 
             $mail->Subject = 'Online Pre-Advising';
             $mail->Body    = "<p>Greetings Student: <br><br> 
@@ -741,7 +741,7 @@ if(isset($_POST['session-add']))
             }
             else
             {
-                $_SESSION['status'] = $mail->ErrorInfo;
+                $_SESSION['status'] = $mail->ErrorInfo + " " + $Studid + " " + $StudEmail;
                 $_SESSION['status_code'] = "error";
                 header("location:adviser-sendsubject.php");
             }
