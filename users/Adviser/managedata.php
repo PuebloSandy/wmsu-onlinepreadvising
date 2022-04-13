@@ -596,7 +596,7 @@ if(isset($_POST['session-add']))
         $update_status = "UPDATE tbladviser_send_sub_to_stud SET status='$Approved' WHERE adviser_id_fk='$Adviserid' and student_id_fk='$Studid' and curri_id_fk='$Currid' and course_id_fk='$Courseid'";
         if(mysqli_query($connection,$update_status)){}
 
-        $get_student = mysqli_query($connection,"SELECT * FROM tblstudent_list WHERE id='$Studid'");
+        $get_student = mysqli_query($connection,"SELECT * FROM tblstudent_list WHERE id='$Studid' and status = 'Enrolled'");
         while($s=mysqli_fetch_array($get_student))
         {
             $StudEmail = $s['email'];
