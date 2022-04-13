@@ -1,7 +1,7 @@
 <?php
 
     session_start();
-    include "../../source/includes/config.php";
+    include("../../source/includes/config.php");
     include("../../source/includes/alertmessage.php");
 
     function generate_password($len = 12){
@@ -324,7 +324,7 @@
         $mail->Host = 'smtp.hostinger.ph';  // Specify main and backup SMTP servers
         $mail->SMTPAuth = true;         // Enable SMTP authentication
         $mail->Username = 'advising@wmsuics.tech';  // SMTP username
-        $mail->Password = 'Advising123_;';  // SMTP password
+        $mail->Password = 'Advising123_';  // SMTP password
         $mail->Port = 465;  // TCP port to connect to
         $mail->SMTPSecure = 'ssl';  // Enable TLS encryption, ssl also accepted
         
