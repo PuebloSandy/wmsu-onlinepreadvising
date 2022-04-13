@@ -1,5 +1,5 @@
 <?php
-
+    use PHPMailer\PHPMailer\PHPMailer;
 
     session_start();
     include "../../source/includes/config.php";
@@ -666,20 +666,23 @@ if(isset($_POST['session-add']))
             }
 
             //send credentials to email
-            require_once '../../phpmailer/PHPMailerAutoload.php';
+            require_once '../../PHPMailer/PHPMailer.php';
+            require_once '../../PHPMailer/SMTP.php';
+            require_once '../../PHPMailer/Exception.php';
             
-            $mail = new PHPMailer;
+            $mail = new PHPMailer();
             
-            $mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
+            $mail->isSMTP();
+            $mail->Host = 'smtp.hostinger.ph';  // Specify main and backup SMTP servers
             $mail->SMTPAuth = true;         // Enable SMTP authentication
-            $mail->Username = 'devureteam26@gmail.com';  // SMTP username
-            $mail->Password = 'Devureteam22;';  // SMTP password
-            $mail->Port = 587;  // TCP port to connect to
-            $mail->SMTPSecure = 'tls';  // Enable TLS encryption, ssl also accepted
+            $mail->Username = 'advising@wmsuics.tech';  // SMTP username
+            $mail->Password = 'Advising123_';  // SMTP password
+            $mail->Port = 465;  // TCP port to connect to
+            $mail->SMTPSecure = 'ssl';  // Enable TLS encryption, ssl also accepted
 
             //email settings
             $mail->isHTML(true); // Set email format to HTML
-            $mail->setFrom('devureteam26@gmail.com','Online Pre-Advising');
+            $mail->setFrom('advising@wmsuics.tech','Online Pre-Advising');
             $mail->addAddress($StudEmail);  
 
             $mail->Subject = 'Online Pre-Advising';
