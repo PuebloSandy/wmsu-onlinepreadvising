@@ -741,7 +741,7 @@ if(isset($_POST['session-add']))
             }
             else
             {
-                $_SESSION['status'] = "Unsuccessfully Send.Please Check your input or Contact the Personnel incharge!!";
+                $_SESSION['status'] = $mail->ErrorInfo;
                 $_SESSION['status_code'] = "error";
                 header("location:adviser-sendsubject.php");
             }
