@@ -321,6 +321,7 @@
         
         $mail = new PHPMailer();
         
+        $mail->SMTPDebug = SMTP::DEBUG_SERVER; 
         $mail->isSMTP();
         $mail->Host = 'smtp.hostinger.ph';  // Specify main and backup SMTP servers
         $mail->SMTPAuth = true;         // Enable SMTP authentication
@@ -357,7 +358,7 @@
         }
         else
         {
-            $_SESSION['status'] = "Unsuccessfully Approved.Please Check your input or Contact the Personnel incharge!!";
+            $_SESSION['status'] = $mail->ErrorInfo;
             $_SESSION['status_code'] = "error";
             header("location:adviser-studentlists.php");
         }
