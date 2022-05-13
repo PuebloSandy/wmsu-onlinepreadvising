@@ -1,5 +1,7 @@
 <?php
     use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\SMTP;
+    use PHPMailer\PHPMailer\Exception;
 
     session_start();
     include("../../source/includes/config.php");
@@ -652,17 +654,27 @@ if(isset($_POST['session-add']))
                     $currid_pres = $g['curri_id'];
                     $course_id_pres = $g['course_id_fk'];
                 }
-                if($subject_id_pre == $Subject_id_fk && $grades_pre == "" && $remarks_pre == "" && $sy_pre == "" && $Studid == $stud_id_pres && $Currid == $currid_pres && $Adviserid == $Adviserid && $Courseid == $course_id_pres)
+                if(mysqli_num_rows($check_subId_pre) > 0)
                 {
-                    //$update_sub_pre = "UPDATE tbladviser_presubject SET school_year='$SY_pre' WHERE subject_id_fk='$subject_id_pre' and adviser_id_fk='$Adviserid' and student_id='$Studid' and curri_id='$Currid' and course_id_fk='$Courseid'";
-                    //if(mysqli_query($connection,$update_sub_pre)){}
-                    $del = "DELETE FROM tbladviser_presubject WHERE grades='0' and remarks='0' and school_year='0' and subject_id_fk='$subject_id_pre' and adviser_id_fk='$Adviserid' and student_id='$Studid' and curri_id='$Currid' and course_id_fk='$Courseid'";
-                    if(mysqli_query($connection,$del)){}
+                    if($subject_id_pre == $Subject_id_fk && $grades_pre == "" && $remarks_pre == "" && $sy_pre == "" && $Studid == $stud_id_pres && $Currid == $currid_pres && $Adviserid == $Adviserid && $Courseid == $course_id_pres)
+                    {
+                        //$update_sub_pre = "UPDATE tbladviser_presubject SET school_year='$SY_pre' WHERE subject_id_fk='$subject_id_pre' and adviser_id_fk='$Adviserid' and student_id='$Studid' and curri_id='$Currid' and course_id_fk='$Courseid'";
+                        //if(mysqli_query($connection,$update_sub_pre)){}
+                        $del = "DELETE FROM tbladviser_presubject WHERE grades='0' and remarks='0' and school_year='0' and subject_id_fk='$subject_id_pre' and adviser_id_fk='$Adviserid' and student_id='$Studid' and curri_id='$Currid' and course_id_fk='$Courseid'";
+                        mysqli_query($connection,$del);
+                    }
+                    else
+                    {
+                        $sta_remarks = "Currently Enrolled";
+                        $insert_sub = "INSERT INTO tbladviser_presubject (lec,lab,units,school_year,remarks,yearlevel,semester,adviser_id_fk,student_id,subject_id_fk,curri_id,college_id_fk,course_id_fk) VALUES ('$Lec','$Lab','$Units','$SchoolYear','$sta_remarks','$YearLevel','$Semester','$Adviserid','$Studid','$Subject_id_fk','$Currid','$College_id_fk','$Courseid')";
+                        mysqli_query($connection,$insert_sub);
+                    }
                 }
                 else
                 {
-                    $insert_sub = "INSERT INTO tbladviser_presubject (lec,lab,units,school_year,yearlevel,semester,adviser_id_fk,student_id,subject_id_fk,curri_id,college_id_fk,course_id_fk) VALUES ('$Lec','$Lab','$Units','$SchoolYear','$YearLevel','$Semester','$Adviserid','$Studid','$Subject_id_fk','$Currid','$College_id_fk','$Courseid')";
-                    if(mysqli_query($connection,$insert_sub)){}
+                    $sta_remarks = "Currently Enrolled";
+                    $insert_sub = "INSERT INTO tbladviser_presubject (lec,lab,units,school_year,remarks,yearlevel,semester,adviser_id_fk,student_id,subject_id_fk,curri_id,college_id_fk,course_id_fk) VALUES ('$Lec','$Lab','$Units','$SchoolYear','$sta_remarks','$YearLevel','$Semester','$Adviserid','$Studid','$Subject_id_fk','$Currid','$College_id_fk','$Courseid')";
+                    mysqli_query($connection,$insert_sub);
                 }
             }
 
@@ -673,75 +685,83 @@ if(isset($_POST['session-add']))
             
             $mail = new PHPMailer();
             
-            $mail->isSMTP();
-            $mail->Host = 'smtp.hostinger.ph';  // Specify main and backup SMTP servers
-            $mail->SMTPAuth = true;         // Enable SMTP authentication
-            $mail->Username = 'advising@wmsuics.tech';  // SMTP username
-            $mail->Password = 'Advising123_';  // SMTP password
-            $mail->Port = 465;  // TCP port to connect to
-            $mail->SMTPSecure = 'ssl';  // Enable TLS encryption, ssl also accepted
+            try {
+                //Server settings
+                $mail->SMTPDebug = 2;   
+                $mail->isSMTP();
+                $mail->Mailer = "smtp";
+                $mail->Host = 'ssl://smtp.gmail.com';  // Specify main and backup SMTP servers
+                $mail->Port = 587;  // TCP port to connect to
+                $mail->SMTPAuth = true;         // Enable SMTP authentication
+                $mail->Username = 'devureteam26@gmail.com';  // SMTP username
+                $mail->Password = 'Devureteam22;';  // SMTP password
+                //$mail->SMTPSecure = ssl;    // Enable TLS encryption, ssl also accepted
+                $mail->Priority = 1;
+                
+                //email settings
+                $mail->isHTML(true); // Set email format to HTML
+                $mail->setFrom('devureteam26@gmail.com','Online Pre-Advising');
+                $mail->addAddress($StudEmail);  
 
-            //email settings
-            $mail->isHTML(true); // Set email format to HTML
-            $mail->setFrom('advising@wmsuics.tech','Online Pre-Advising');
-            $mail->addAddress($StudEmail);  
-
-            $mail->Subject = 'Online Pre-Advising';
-            $mail->Body    = "<p>Greetings Student: <br><br> 
-                Your Subject Has been Approved by your Adviser: <br>Your Adviser is <b>$Fullname</b><br>
-                Your Course is <b>$coursename</b><br><br>
-                Your Subject Lists:".
-                "<table width='100%' style='margin-top:15px;' align='left class='table table-striped border'>". 
-                    "<thead><tr>".
-                        "<th><b>SN</b></th>".
-                        "<th nowrap='nowrap'><b>Code</b></th>".
-                        "<th nowrap='nowrap'><b>Title</b></th>".
-                        "<th nowrap='nowrap'><b>Lec</b></th>".
-                        "<th nowrap='nowrap'><b>Lab</b></th>".
-                        "<th nowrap='nowrap'><b>Units</b></th>".
-                        "<th nowrap='nowrap'><b>School Year</b></th>".
-                    "</tr></thead><tbody>";
-                $get_add_send = mysqli_query($connection,"SELECT * FROM tbladviser_send_sub_to_stud WHERE status='Approved' and adviser_id_fk='$Adviserid' and student_id_fk='$Studid' and curri_id_fk='$Currid' and course_id_fk='$Courseid' ORDER BY id");
-                $d = 0;
-                while($c = mysqli_fetch_array($get_add_send)){ $d++;
-                    $subjectid = $c['subject_id_fk'];
-                    $units = $c['units'];
-                    $total_units = $total_units + $units;
-                    $get_add_subject = mysqli_query($connection,"SELECT * FROM tblsubject WHERE id='$subjectid'");
-                    while($a=mysqli_fetch_array($get_add_subject)){
-            $mail->Body.= 
-                    "<tr>".
-                        "<td nowrap='nowrap'><center>".$d."</center></td>".
-                        "<td nowrap='nowrap'><center>".$a['subject_code']."</center></td>".
-                        "<td nowrap='nowrap'><center>".$a['description']."</center></td>".
-                        "<td nowrap='nowrap'><center>".$c['lec']."</center></td>".
-                        "<td nowrap='nowrap'><center>".$c['lab']."</center></td>".
-                        "<td nowrap='nowrap'><center>".$c['units']."</center></td>".
-                        "<td nowrap='nowrap'><center>".$c['school_year']."</center></td>
-                    </tr>";
-                        }
-                    }            
-            $mail->Body.= "</tbody>".
-                        "<tfoot>".
-                            "<tr style='vertical-align: bottom;'>".
-                            "<td></td>".
-                            "<td></td>".
-                            "<td><center><b>Total:</b></center></td>".
-                            "<td><center></center></td>".
-                            "<td></td>".
-                            "<td><center><b>".$total_units."</b></center></td>".
-                            "<td></td>".
-                            "</tr>".
-                        "</tfoot></table>";
-    
-            if($mail->send()){
-                $_SESSION['status'] = "Successfully Send!!";
+                $mail->Subject = 'Online Pre-Advising';
+                $mail->Body    = "<p>Greetings Student: <br><br> 
+                    Your Subject Has been Approved by your Adviser: <br>Your Adviser is <b>$Fullname</b><br>
+                    Your Course is <b>$coursename</b><br><br>
+                    Your Subject Lists:".
+                    "<table width='100%' style='margin-top:15px;' align='left class='table table-striped border'>". 
+                        "<thead><tr>".
+                            "<th><b>SN</b></th>".
+                            "<th nowrap='nowrap'><b>Code</b></th>".
+                            "<th nowrap='nowrap'><b>Title</b></th>".
+                            "<th nowrap='nowrap'><b>Lec</b></th>".
+                            "<th nowrap='nowrap'><b>Lab</b></th>".
+                            "<th nowrap='nowrap'><b>Units</b></th>".
+                            "<th nowrap='nowrap'><b>School Year</b></th>".
+                        "</tr></thead><tbody>";
+                    $get_add_send = mysqli_query($connection,"SELECT * FROM tbladviser_send_sub_to_stud WHERE status='$Approved' and adviser_id_fk='$Adviserid' and student_id_fk='$Studid' and curri_id_fk='$Currid' and course_id_fk='$Courseid' ORDER BY id");
+                    $d = 0;
+                    while($c = mysqli_fetch_array($get_add_send)){ 
+                        $d++;
+                        $subjectid = $c['subject_id_fk'];
+                        $units = $c['units'];
+                        $get_add_subject = mysqli_query($connection,"SELECT * FROM tblsubject WHERE id='$subjectid'");
+                        while($a=mysqli_fetch_array($get_add_subject)){
+                $mail->Body.= 
+                        "<tr>".
+                            "<td nowrap='nowrap'><center>".$d."</center></td>".
+                            "<td nowrap='nowrap'><center>".$a['subject_code']."</center></td>".
+                            "<td nowrap='nowrap'><center>".$a['description']."</center></td>".
+                            "<td nowrap='nowrap'><center>".$c['lec']."</center></td>".
+                            "<td nowrap='nowrap'><center>".$c['lab']."</center></td>".
+                            "<td nowrap='nowrap'><center>".$c['units']."</center></td>".
+                            "<td nowrap='nowrap'><center>".$c['school_year']."</center></td>
+                        </tr>";
+                            }
+                        }            
+                $mail->Body.= "</tbody>".
+                            "<tfoot>".
+                                "<tr style='vertical-align: bottom;'>".
+                                "<td></td>".
+                                "<td></td>".
+                                "<td><center><b>Total:</b></center></td>".
+                                "<td><center></center></td>".
+                                "<td></td>".
+                                $get_add_send_units = "SELECT sum(units) FROM tbladviser_send_sub_to_stud WHERE status='$Approved' and adviser_id_fk='$Adviserid' and student_id_fk='$Studid' and curri_id_fk='$Currid' and course_id_fk='$Courseid' ORDER BY id";
+                                $total_units_check = mysqli_query($connection,$get_add_send_units);
+                                $all_units_total = mysqli_fetch_array($total_units_check);
+                                $units_row = $all_units_total[0];
+                                "<td><center><b>".$units_row."</b></center></td>".
+                                "<td></td>".
+                                "</tr>".
+                            "</tfoot></table>";
+        
+                $mail->send();
+                $_SESSION['status'] = "Successfully Send to ".$StudEmail;
                 $_SESSION['status_code'] = "success";
                 header("location:adviser-sendsubject.php");
             }
-            else
-            {
-                $_SESSION['status'] = $mail->ErrorInfo + " " + $Studid + " " + $StudEmail;
+            catch (Exception $e) {
+                $_SESSION['status'] = $mail->ErrorInfo;
                 $_SESSION['status_code'] = "error";
                 header("location:adviser-sendsubject.php");
             }
