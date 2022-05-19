@@ -59,7 +59,7 @@
 				$seal = $sa['seal'];
 			}
 ?>
-<div class="mobile">
+		<div class="mobile">
 			<h1>📴</h1>
 			<h2>Unavailable for Mobile Device..</h2>
 			<h3></h3>
@@ -100,78 +100,6 @@
 						<li class="nav-item">
 							<a class="nav-link active py-0" aria-current="page" href="adviser-profile.php"><i id="icons" class="fas fa-user-tie"></i><span class="nav-label"> My Profile</span></a>
 						</li>
-						<!-- notifications 
-						<li class="nav-item dropstart">
-							<?php
-								//$check_stud_req = "SELECT count(id) FROM tblrequest_account WHERE req_usertype='Student' and course_id_fk='$courseid' and yearlevel='$year'";
-								//$stud_check = mysqli_query($connection,$check_stud_req);
-								//$stud_total = mysqli_fetch_array($stud_check);
-								//$stud_row = $stud_total[0];
-
-								$check_stud_grade = "SELECT count(id) FROM tblstudent_pdf WHERE submission_status='Pending' and yearlevel='$year'";
-								$grade_check = mysqli_query($connection,$check_stud_grade);
-								$grade_total = mysqli_fetch_array($grade_check);
-								$grade_row = $grade_total[0];
-
-								$total_noti = $grade_row;
-							?>
-							<a class="nav-link dropstart active py-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false"> <i id="icons" class="fas fa-bell"></i><span class="badge rounded-pill bg-info text-white align-text-top" id="notif-number"><?php echo $total_noti ?></span><span class="nav-label"> Notifications</span> </a>
-							<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-								<li>
-								<?php
-								/*
-									if($stud_row == 0){
-										echo '<a class="dropdown-item" href="#">
-											<span class="badge bg-success">Account</span>
-											<span class="font-weight-bold" aria-disabled="true">
-											There is no Request </a>';	
-									}
-									else
-									{
-										$notif_num = mysqli_query($connection,"SELECT * FROM tblrequest_account WHERE req_usertype='Student' and course_id_fk='$courseid' and yearlevel='$year'");
-										echo'<a data-toggle="modal" data-target="#manage-request" class="dropdown-item" href="#">
-											<span class="badge bg-success">Account</span>
-											<span class="font-weight-bold" aria-disabled="true">';
-											$notif_count = mysqli_num_rows($notif_num);	
-										echo 'REQUEST ACCOUNT '.$notif_count;	
-											while($fa=mysqli_fetch_array($notif_num))
-											{
-												$req_tudent_id = $fa['id'];
-											}
-										echo'</a>';
-									}*/
-								?>
-								</li>
-								<li>
-								<?php 
-									$check_stud_grade = mysqli_query($connection,"SELECT * FROM tblstudent_pdf WHERE submission_status='Pending' and yearlevel='$year' and course_id_fk='$courseid'");
-									if(mysqli_num_rows($check_stud_grade) > 0)
-									{
-										while($ca=mysqli_fetch_array($check_stud_grade))
-										{
-											$Student_id = $ca['student_id_fk'];
-											$Curr_id = $ca['curri_id_fk']; 
-										}
-								?>
-									<a class="dropdown-item" href="#" data-toggle="modal" data-target="#checkStudentModal">
-										<span class="badge bg-primary">Grade</span>
-										<span class="text fw-bold">Students</span> Submitted their grade
-									</a>
-								<?php		
-									}
-									else
-									{
-								?>
-									<a class="dropdown-item" href="#">
-										<span class="badge bg-primary">Grade</span>
-										<span class="text fw-bold">No Grade been Submitted</span>
-									</a>
-								<?php
-									}
-								?>
-								</li>	
-							</ul>
-						</li>-->
 						<!-- logout -->
 						<li class="nav-item">
 							<a id="icons" class="nav-link active py-0" href="#" data-toggle="modal" data-target="#logoutmodal" aria-disabled="true"><i class="fas fa-sign-out-alt"></i><span class="nav-label"> Logout</span></a>
@@ -241,42 +169,75 @@
                     
 				</div>
                 <div class="col mt-2 mb-2" align="right">
-                    <form action="" method="POST">
-                        <button class="btn btn-white dropdown-toggle border p-2" type="button" title="More Option" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Select Semester
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="cursor: pointer;">
-                            <form action="adviser-sendsubject.php" method="POST">
-                                <input type="hidden" name="sem" value="1st">
-                                <button type="submit" name="search" class="dropdown-item">1st Semester</button>
-                            </form>
-                            <form action="adviser-sendsubject.php" method="POST">
-                                <input type="hidden" name="sem" value="2nd">
-                                <button type="submit" name="search" class="dropdown-item">2nd Semester</button>
-                            </form>
-                            <form action="adviser-sendsubject.php" method="POST">
-                                <input type="hidden" name="sem" value="summer">
-                                <button type="submit" name="search" class="dropdown-item">Summer</button>
-                            </form>
-                        </div>
+                    <form action="adviser-sendsubject.php" method="POST">
+						<div class="container">
+							<div class="row justify-content-end">
+								<div class="col-5">
+									<select class="form-select" name="yr" aria-label="Default select example" required>
+										<option value="">Select Year Level</option>
+										<option value="1">1st Year</option>
+										<option value="2">2nd Year</option>
+										<option value="3">3rd Year</option>
+										<option value="4">4th Year</option>
+										<option value="5">5th Year</option>
+									</select>
+								</div>
+								<div class="col-5">
+									<select class="form-select" name="sem" aria-label="Default select example" required>
+										<option value="">Select Semester</option>
+										<option value="1st">1st Semester</option>
+										<option value="2nd">2nd Semester</option>
+										<option value="summer">Summer</option>
+									</select>
+								</div>
+								<div class="col">
+									<button type="submit" name="search" class="btn btn-success fas fa-search"></button>
+								</div>
+							</div>
+						</div>
                     </form>
                 </div>
 			</div>
             <?php
                 if(isset($_POST['search']))
                 {
-                    $search = $_POST['sem'];
-                    if($search == "summer")
+					$yr = $_POST['yr'];
+					$sem = $_POST['sem'];
+					if($yr == "1")
+					{
+						$year = "1st Year";
+					}
+					else if($yr == "2")
+					{
+						$year = "2nd Year";
+					}
+					else if($yr == "3")
+					{
+						$year = "3rd Year";
+					}
+					else if($yr == "4")
+					{
+						$year = "4th Year";
+					}
+					else if($yr == "5")
+					{
+						$year = "5th Year";
+					}
+                    if($sem == "summer")
                     {
-                        $search = "Summer";
+                        $sem = "Summer";
                     }
-                    if(mysqli_query($connection,$search)){}
+					$search = $year.' - '.$sem;
+
+                    mysqli_query($connection,$search);
+					mysqli_query($connection,$yr);
+					mysqli_query($connection,$sem);
             ?>
             <div class="row border mt-2" style="max-height:700px;">
                 <span class="fw-bold fs-4 mt-2 mb-2"><center><?php echo $search?> Semester</center></span>
-                <div class="mb-3">
+                <div class="mb-2">
                     <div class="row">
-                        <div class="col" align="left">
+						<div class="col" align="left">
                             <input type="text" id="myInput" class="rounded" onkeyup="mySearch()" placeholder="Search Subject Title.." autocomplete="off"/>
                         </div>
                         <div class="col" align="right">
@@ -295,7 +256,7 @@
 					<input type="hidden" name="collegeid" value="<?php echo $collegeid?>">
 					<thead class="text-white">
                         <tr>
-                            <th width="5%"><center></center></th>
+                            <th width="5%"><center><input type="checkbox" id="chckAllSubjectsAdd"></center></th>
                             <th hidden><center>id</center></th>
                             <th><center>Code</center></th>
                             <th width="25%"><center>Title</center></th>
@@ -303,11 +264,12 @@
                             <th scope="col"><center>Lab</center></th>
                             <th scope="col"><center>Units</center></th>
                             <th ><center>Year Level</center></th>
+							<th ><center>Status</center></th>
                         </tr>
 					</thead>
 					<tbody>
             <?php
-				$select_subject_sem = mysqli_query($connection,"SELECT * FROM tblsubject WHERE semester='$search' and curr_id_fk='$Currid' and course_id_fk='$courseid'");
+				$select_subject_sem = mysqli_query($connection,"SELECT * FROM tblsubject WHERE yearlevel='$yr' and semester='$sem' and curr_id_fk='$Currid' and course_id_fk='$courseid'");
                 if(mysqli_num_rows($select_subject_sem) > 0)
                 {
                     foreach($select_subject_sem as $se)
@@ -335,7 +297,7 @@
                             $yrlvl = "5th";
                         }
 
-						$check_get_subid = mysqli_query($connection,"SELECT remarks FROM tbladviser_presubject WHERE remarks in ('PASSED') and adviser_id_fk='$adviserid' and student_id='$Studid' and subject_id_fk='$subjectID' and curri_id='$Currid' and course_id_fk='$courseid'");
+						$check_get_subid = mysqli_query($connection,"SELECT * FROM tbladviser_presubject WHERE remarks in ('PASSED','CREDITED') and adviser_id_fk='$adviserid' and student_id='$Studid' and subject_id_fk='$subjectID' and curri_id='$Currid' and course_id_fk='$courseid'");
 						while($k=mysqli_fetch_array($check_get_subid))
 						{
 							$Send_subID = $k['subject_id_fk'];
@@ -346,7 +308,7 @@
 						{
             ?>
                     <tr>
-                        <td><center><input type="checkbox" name="sub_id[]" id="myCheck" value="<?php echo $se['id']?>" onclick="myCheckBox()"></center></td>
+						<td><center><input type="checkbox" name="sub_id[]" id="myCheck" value="<?php echo $se['id']?>" onclick="myCheckBox()"></center></td>
                         <td hidden><center><?php echo $se['id']?></center></td>
                         <td><center><?php echo $se['subject_code']?></center></td>
                         <td><center><?php echo $se['description']?></center></td>
@@ -354,26 +316,31 @@
                         <td><center><?php echo $se['lab']?></center></td>
                         <td><center><?php echo $se['units']?></center></td>
                         <td><center><?php echo $yrlvl?></center></td>
+						<?php
+						$select_sub_id_status = mysqli_query($connection,"SELECT * FROM tbladviser_presubject WHERE subject_id_fk='$subjectID' and student_id='$Studid' and adviser_id_fk='$adviserid' and curri_id='$Currid' and course_id_fk='$courseid'");
+						while($yt = mysqli_fetch_array($select_sub_id_status))
+						{
+							$remark_status = $yt['remarks'];
+						}
+						if(mysqli_num_rows($select_sub_id_status) == 0)
+						{ 
+							$re_status = "Not Yet Taken";
+						?>
+							<td><center><?php echo $re_status ?></center></td>
+						<?php
+						}
+						else
+						{
+						?>
+							<td><center><?php echo $remark_status ?></center></td>
+						<?php
+						}
+						?>
                     </tr>
             <?php
 						}
                     }
-		}
-		else if(mysqli_num_rows($select_subject_sem) == 0)
-		{
-		?>
-			<tr>
-				<td></td>
-				<td hidden></td>
-				<td></td>
-				<td></td>
-				<td><center>Already Have the Subjects.</center></td>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>
-		<?php
-		}
+                }
             ?>
                     </tbody>
                     <tfoot >	
@@ -389,14 +356,7 @@
                 {
             ?>
             <div class="row border mt-2">
-                <span class="fw-bold fs-4 mt-2 mb-2"><center>Select Semester First!!</center></span>
-				<div class="mb-3">
-                    <div class="row">
-                        <div class="col" align="left">
-                            <input type="text" id="myInput" class="rounded" onkeyup="mySearch()" placeholder="Search for subject.." autocomplete="off" readonly/>
-                        </div>
-                    </div>
-                </div>
+                <span class="fw-bold fs-4 mt-3 mb-4"><center>Select Semester First!!</center></span>
                 <div class="col">
 					<table class="table table-striped" id="" width="100%">
 						<thead class="text-white">
@@ -720,57 +680,6 @@
 		</div>
 		<!--END OF DELETE view add Subject Modal -->
 
-		<!-- User Profile MODAL-->
-		<div class="container container-fluid">
-			<div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="deletemodalLabel" aria-hidden="true">
-            	<div class="modal-dialog modal-dialog-scrollable" role="document">
-                	<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="exampleModalLabel">Profile</h5></h5>
-							<button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-					</div>
-                            <div class="modal-body container">
-					<form action="managedata.php" method="POST">
-                            <input type="hidden" name="userid" value="<?php echo $adminid?>">
-                                <!-- Inputs -->
-								<div class="mb-3">
-									<label for="firstname" class="form-label">Firstname</label>
-									<input type="text" name="firstname" class="form-control text-center" value="<?php echo ucfirst($firstname);?>" id="firstname">
-								</div>
-								
-								<div class="mb-3">
-									<label for="lastname" class="form-label">Lastname</label>
-									<input type="text" name="lastname" class="form-control text-center" value="<?php echo ucfirst($lastname);?>" id="lastname">
-								</div>
-
-								<div class="mb-3">
-									<label for="email" class="form-label">Email</label>
-									<input type="email" name="email" class="form-control text-center" value="<?php echo $email;?>" id="email">
-								</div>
-
-								<div class="mb-3">
-									<label for="password" class="form-label">Password</label>
-									<input type="password" name="password" class="form-control text-center" value="<?php echo $password;?>" id="password">
-									<center>
-										<div class="row mt-3">
-											<div class="col">
-												<input type="checkbox" onclick="myFunction()"> Show Password
-											</div>
-										</div>
-									</center>
-								</div>
-								
-                            </div>
-                            <div class="modal-footer" align="right">
-								<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-								<button type="submit" name="profile_update" class="btn btn-success">Update</button>
-							</div>                    
-                    </form>
-                </div>
-            </div>
-        </div>
-    	<!--END OF user Profile MODAL-->
-
 		<!-- REQUEST POPUP -->
 		<div class="container container-fluid">
 			<div class="modal fade" id="manage-request" tabindex="-1" aria-labelledby="manage-requestLabel" aria-hidden="true">
@@ -942,6 +851,25 @@
 		?> 
 
 		<script>
+			$(document).ready(function() {
+				var $selectAllSubjectAdd = $('#chckAllSubjectsAdd'); // main checkbox inside table thead
+				var $tableSendAdd = $('#tableSend'); // table selector 
+				var $tdCheckboxSubAdd = $tableSendAdd.find('tbody input:checkbox'); // checboxes inside table body
+				var tdCheckboxCheckedSubAdd = 0; // checked checboxes
+
+				// Select or deselect all checkboxes depending on main checkbox change
+					$selectAllSubjectAdd.on('click', function () {
+					$tdCheckboxSubAdd.prop('checked', this.checked);
+				});
+
+				// Toggle main checkbox state to checked when all checkboxes inside tbody tag is checked
+					$tdCheckboxSubAdd.on('change', function(e){
+					tdCheckboxCheckedSubAdd = $tableSendAdd.find('tbody input:checkbox:checked').length; // Get count of checkboxes that is checked
+					// if all checkboxes are checked, then set property of main checkbox to "true", else set to "false"
+					$selectAllSubjectAdd.prop('checked', (tdCheckboxCheckedSubAdd === $tdCheckboxSubAdd.length));
+				})
+			});
+
 			$(document).ready(function() {
 				$('body').on('click','.deleteAddSubjectbtn',function() {
 					$('#deleteAddSubjectModal').modal('show');
