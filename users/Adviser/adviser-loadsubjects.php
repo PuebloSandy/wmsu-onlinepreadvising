@@ -6525,7 +6525,7 @@
                             <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                         </div>
             <?php
-                $select_sub = mysqli_query($connection,"SELECT * FROM tbladviser_send_sub_to_stud WHERE status='Current Enrolled' and adviser_id_fk='$adminid' and student_id_fk='$Studid' and curri_id_fk='$Currid'");
+                $select_sub = mysqli_query($connection,"SELECT * FROM tbladviser_send_sub_to_stud WHERE status='Currently Enrolled' and adviser_id_fk='$adminid' and student_id_fk='$Studid' and curri_id_fk='$Currid'");
             ?>
                         <div class="modal-body">
                             <div class="row">
