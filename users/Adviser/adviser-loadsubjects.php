@@ -187,7 +187,7 @@
                             </div>
                             <div class="mt-2 mb-2">
                             <?php
-                                $select_sub = mysqli_query($connection,"SELECT * FROM tbladviser_send_sub_to_stud WHERE status='Approved' and adviser_id_fk='$adminid' and student_id_fk='$Studid' and curri_id_fk='$Currid' and course_id_fk='$courseid'");
+                                $select_sub = mysqli_query($connection,"SELECT * FROM tbladviser_send_sub_to_stud WHERE status='Currently Enrolled' and adviser_id_fk='$adminid' and student_id_fk='$Studid' and curri_id_fk='$Currid' and course_id_fk='$courseid'");
                                 if(mysqli_num_rows($select_sub) > 0)
                                 {
                             ?>
