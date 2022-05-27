@@ -269,7 +269,7 @@
 					</thead>
 					<tbody>
             <?php
-				$select_subject_sem = mysqli_query($connection,"SELECT * FROM tblsubject WHERE yearlevel='$yr' and semester='$sem' and curr_id_fk='$Currid' and course_id_fk='$courseid'");
+				$select_subject_sem = mysqli_query($connection,"SELECT * FROM tblstudent_subject WHERE student_id_fk='$Studid' and  yearlevel='$yr' and semester='$sem' and curr_id_fk='$Currid' and course_id_fk='$courseid'");
                 if(mysqli_num_rows($select_subject_sem) > 0)
                 {
                     foreach($select_subject_sem as $se)
@@ -297,7 +297,7 @@
                             $yrlvl = "5th";
                         }
 
-						$check_get_subid = mysqli_query($connection,"SELECT * FROM tbladviser_presubject WHERE remarks in ('PASSED','CREDITED') and adviser_id_fk='$adviserid' and student_id='$Studid' and subject_id_fk='$subjectID' and curri_id='$Currid' and course_id_fk='$courseid'");
+						$check_get_subid = mysqli_query($connection,"SELECT * FROM tblstudent_subject WHERE remarks in ('PASSED','CREDITED','FAILED') and adviser_id_fk='$adviserid' and student_id_fk='$Studid' and id='$subjectID' and curr_id_fk='$Currid' and course_id_fk='$courseid'");
 						while($k=mysqli_fetch_array($check_get_subid))
 						{
 							$Send_subID = $k['subject_id_fk'];
@@ -316,26 +316,7 @@
                         <td><center><?php echo $se['lab']?></center></td>
                         <td><center><?php echo $se['units']?></center></td>
                         <td><center><?php echo $yrlvl?></center></td>
-						<?php
-						$select_sub_id_status = mysqli_query($connection,"SELECT * FROM tbladviser_presubject WHERE subject_id_fk='$subjectID' and student_id='$Studid' and adviser_id_fk='$adviserid' and curri_id='$Currid' and course_id_fk='$courseid'");
-						while($yt = mysqli_fetch_array($select_sub_id_status))
-						{
-							$remark_status = $yt['remarks'];
-						}
-						if(mysqli_num_rows($select_sub_id_status) == 0)
-						{ 
-							$re_status = "Not Yet Taken";
-						?>
-							<td><center><?php echo $re_status ?></center></td>
-						<?php
-						}
-						else
-						{
-						?>
-							<td><center><?php echo $remark_status ?></center></td>
-						<?php
-						}
-						?>
+						<td><center><?php echo $se['remarks'] ?></center></td>
                     </tr>
             <?php
 						}
@@ -445,7 +426,7 @@
 													<th scope="col"><center>Lab</center></th>
 													<th scope="col"><center>Units</center></th>
 													<th ><center>Year Level</center></th>
-													<th><center>School Year</center></th>
+													<th hidden><center>School Year</center></th>
 													<th><center>Action</center></th>
 												</tr>
 											</thead>
@@ -478,7 +459,7 @@
 												{
 													$yrlvl = "5th";
 												}
-												$get_subid = mysqli_query($connection,"SELECT * FROM tblsubject WHERE id='$SubjID'"); 
+												$get_subid = mysqli_query($connection,"SELECT * FROM tblstudent_subject WHERE id='$SubjID'"); 
 												While($j=mysqli_fetch_array($get_subid))
 												{
 									?>
@@ -490,7 +471,7 @@
 												<td><center><?php echo $l['lab']?></center></td>
 												<td><center><?php echo $l['units']?></center></td>
 												<td><center><?php echo $yrlvl?></center></td>
-												<td><center><?php echo $l['school_year']?></center></td>
+												<td hidden><center><?php echo $l['school_year']?></center></td>
 												<td><center><button type="button" title="Delete" class="btn btn-danger fas fa-trash deleteAddSubjectbtn"></button></center></td>
 											</tr>
 									<?php
@@ -513,7 +494,7 @@
 													<td><center></center></td>
 													<td class="fw-bold"><center><?php echo $Total_units?></center></td>
 													<td></td>
-													<td></td>
+													<td hidden></td>
 													<td></td>
 												</tr>
 											</tfoot>
@@ -565,7 +546,7 @@
 												<th scope="col"><center>Lab</center></th>
 												<th scope="col"><center>Units</center></th>
 												<th ><center>Year Level</center></th>
-												<th><center>School Year</center></th>
+												<th hidden><center>School Year</center></th>
 												<th><center>Action</center></th>
 											</tr>
 										</thead>
@@ -598,7 +579,7 @@
 											{
 												$yrlvl = "5th";
 											}
-											$get_subid = mysqli_query($connection,"SELECT * FROM tblsubject WHERE id='$SubjID'"); 
+											$get_subid = mysqli_query($connection,"SELECT * FROM tblstudent_subject WHERE id='$SubjID'"); 
 											While($j=mysqli_fetch_array($get_subid))
 											{
 								?>
@@ -610,7 +591,7 @@
 											<td><center><?php echo $l['lab']?></center></td>
 											<td><center><?php echo $l['units']?></center></td>
 											<td><center><?php echo $yrlvl?></center></td>
-											<td><center><?php echo $l['school_year']?></center></td>
+											<td hidden><center><?php echo $l['school_year']?></center></td>
 											<td><center><button type="button" title="Delete" class="btn btn-danger fas fa-trash deleteAddSubjectbtn"></button></center></td>
 										</tr>
 								<?php
@@ -633,7 +614,7 @@
 												<td><center></center></td>
 												<td class="fw-bold"><center><?php echo $Total_units?></center></td>
 												<td></td>
-												<td></td>
+												<td hidden></td>
 												<td></td>
 											</tr>
 										</tfoot>
