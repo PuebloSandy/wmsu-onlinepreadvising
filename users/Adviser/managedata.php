@@ -149,19 +149,47 @@
             header("location:adviser-studentlists.php"); 
         }
         else
-        {      
+        {   
             $sql="INSERT INTO `tblstudent_list`(`firstname`,`middle`, `lastname`,`suffix`,`status`,`college_status`,`email`, `contact`,`college_id_fk`,`course_id_fk`,`curri_id_fk`,`adviser_id_fk`) VALUES ('$FIRSTNAME','$MIDDLE','$LASTNAME','$SUFFIX','$Status','$Student_status','$Email','$Contact','$Collegeid',$Courseid,'$curriculum','$Adviserid')";
-            if(mysqli_query($connection,$sql))
+            mysqli_query($connection,$sql);
+
+            $get_stud_id = mysqli_query($connection,"SELECT * FROM tblstudent_list WHERE email='$Email'");
+            while($s = mysqli_fetch_array($get_stud_id))
             {
-                $_SESSION['status'] = "Successfully Added!!";
-                $_SESSION['status_code'] = "success";
-                header("location:adviser-studentlists.php"); 
-            }    
-            else
+                $studid = $s['id'];
+            }
+
+            $get_sub = mysqli_query($connection,"SELECT * FROM tblsubject WHERE college_id_fk='$Collegeid' and course_id_fk='$Courseid' and curr_id_fk='$curriculum'");
+            foreach($get_sub as $su)
             {
-                $_SESSION['status'] = "Unsuccessfully Added.Please Check your input or Contact the Personnel incharge!!";
-                $_SESSION['status_code'] = "error";
-                header("location:adviser-studentlists.php"); 
+                $sub_id = $su['id'];
+                $sub_code = $su['subject_code'];
+                $sub_des = $su['description'];
+                $sub_lec = $su['lec'];
+                $sub_lab = $su['lab'];
+                $sub_units = $su['units'];
+                $sub_yearlevel = $su['yearlevel'];
+                $sub_semester = $su['semester'];
+                $sub_prerequisite = $su['prerequisite'];
+                $sub_status = $su['status'];
+                $sub_curri_id_fk = $su['curr_id_fk'];
+                $sub_college_id_fk = $su['college_id_fk'];
+                $sub_course_id_fk = $su['course_id_fk'];
+                $sub_remarks = "Not Yet Taken";
+
+                $save_stud_sub = "INSERT INTO tblstudent_subject (subject_code,description,lec,lab,units,yearlevel,semester,prerequisite,status,remarks,student_id_fk,adviser_id_fk,subject_id_fk,curr_id_fk,college_id_fk,course_id_fk) VALUES ('$sub_code','$sub_des','$sub_lec','$sub_lab','$sub_units','$sub_yearlevel','$sub_semester','$sub_prerequisite','$sub_status','$sub_remarks','$studid','$Adviserid','$sub_id','$sub_curri_id_fk','$sub_college_id_fk','$sub_course_id_fk')";
+                if(mysqli_query($connection,$save_stud_sub))
+                {
+                    $_SESSION['status'] = "Successfully Added!!";
+                    $_SESSION['status_code'] = "success";
+                    header("location:adviser-studentlists.php"); 
+                }    
+                else
+                {
+                    $_SESSION['status'] = "Unsuccessfully Added.Please Check your input or Contact the Personnel incharge!!";
+                    $_SESSION['status_code'] = "error";
+                    header("location:adviser-studentlists.php");
+                }
             }
         }
     }
@@ -312,7 +340,7 @@
             $reqid = $fa['id'];
         }
 
-        $c = "ALTER TABLE tblrequest_account AUTO_INCREMENT = 1";
+        $c = "ALTER TABLE tblrequest_account AUTO_INCREMENT = $reqid";
 
         //send credentials to email
         require_once '../../PHPMailer/PHPMailer.php';
@@ -322,16 +350,16 @@
         $mail = new PHPMailer();
         
         $mail->isSMTP();
-        $mail->Host = 'smtp.hostinger.ph';  // Specify main and backup SMTP servers
+        $mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
         $mail->SMTPAuth = true;         // Enable SMTP authentication
-        $mail->Username = 'info@wmsuics.tech';  // SMTP username
-        $mail->Password = 'tracking_MARK01';  // SMTP password
+        $mail->Username = 'devureteam26@gmail.com';  // SMTP username
+        $mail->Password = 'Devureteam22;';  // SMTP password
         $mail->Port = 465;  // TCP port to connect to
         $mail->SMTPSecure = 'ssl';  // Enable TLS encryption, ssl also accepted
         
         //email settings
         $mail->isHTML(true); // Set email format to HTML
-        $mail->setFrom('info@wmsuics.tech','Online Pre-Advising');
+        $mail->setFrom('devureteam26@gmail.com','Online Pre-Advising');
         $mail->addAddress($Student_email);  
 
         $mail->Subject = 'Online Pre-Advising';
@@ -393,16 +421,16 @@
         $mail = new PHPMailer();
         
         $mail->isSMTP();
-        $mail->Host = 'smtp.hostinger.ph';  // Specify main and backup SMTP servers
+        $mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
         $mail->SMTPAuth = true;         // Enable SMTP authentication
-        $mail->Username = 'info@wmsuics.tech';  // SMTP username
-        $mail->Password = 'tracking_MARK01';  // SMTP password
+        $mail->Username = 'devureteam26@gmail.com';  // SMTP username
+        $mail->Password = 'Devureteam22;';  // SMTP password
         $mail->Port = 465;  // TCP port to connect to
         $mail->SMTPSecure = 'ssl';  // Enable TLS encryption, ssl also accepted
         
         //email settings
         $mail->isHTML(true); // Set email format to HTML
-        $mail->setFrom('info@wmsuics.tech','Online Pre-Advising');
+        $mail->setFrom('devureteam26@gmail.com','Online Pre-Advising');
         $mail->addAddress($Student_email);  
 
         $mail->Subject = 'Online Pre-Advising';
@@ -633,7 +661,7 @@
                 $Subject_id_fk = $get_sub['subject_id_fk'];
                 $College_id_fk = $get_sub['college_id_fk'];
 
-                $check_subId_pre = mysqli_query($connection,"SELECT * FROM tbladviser_presubject WHERE subject_id_fk='$Subject_id_fk' and adviser_id_fk='$Adviserid' and student_id='$Studid' and curri_id='$Currid' and course_id_fk='$Courseid'");
+                $check_subId_pre = mysqli_query($connection,"SELECT * FROM tblstudent_subject WHERE id='$Subject_id_fk' and adviser_id_fk='$Adviserid' and student_id_fk='$Studid' and curr_id_fk='$Currid' and course_id_fk='$Courseid'");
                 while($g=mysqli_fetch_array($check_subId_pre))
                 {
                     $SubID_PRE = $g['id'];
@@ -641,32 +669,20 @@
                     $remarks_pre = $g['remarks'];
                     $grades_pre = $g['grades'];
                     $sy_pre = $g['school_year'];
-                    $stud_id_pres = $g['student_id'];
-                    $currid_pres = $g['curri_id'];
+                    $stud_id_pres = $g['student_id_fk'];
+                    $currid_pres = $g['curr_id_fk'];
                     $course_id_pres = $g['course_id_fk'];
                 }
 
                 $get_SY = mysqli_query($connection,"SELECT * FROM tblschool_year WHERE status='Activated'");
                 while($sy=mysqli_fetch_array($get_SY))
                 {
-                    $SY_pre = $sy['school_year'];
+                    //$SY_pre = $sy['school_year'];
+                    $SY_pre = 0;
                 }
 
-                if(mysqli_num_rows($check_subId_pre) > 0)
-                {
-                    if($subject_id_pre == $Subject_id_fk && $remarks_pre == "Recommended" || $subject_id_pre == $Subject_id_fk && $remarks_pre == "For Creditation")
-                    {
-                        $update_sub_pre = "UPDATE tbladviser_presubject SET remarks='Currently Enrolled',school_year='$SY_pre' WHERE subject_id_fk='$subject_id_pre' and adviser_id_fk='$Adviserid' and student_id='$Studid' and curri_id='$Currid' and course_id_fk='$Courseid'";
-                        //$del = "DELETE FROM tbladviser_presubject WHERE grades='0' and remarks IN ('Recommended','For Creditation') and school_year='0' and subject_id_fk='$subject_id_pre' and adviser_id_fk='$Adviserid' and student_id='$Studid' and curri_id='$Currid' and course_id_fk='$Courseid'";
-                        mysqli_query($connection,$update_sub_pre);
-                    }
-                }
-                else
-                {
-                    $sta_remarks = "Currently Enrolled";
-                    $insert_sub = "INSERT INTO tbladviser_presubject (lec,lab,units,school_year,remarks,yearlevel,semester,adviser_id_fk,student_id,subject_id_fk,curri_id,college_id_fk,course_id_fk) VALUES ('$Lec','$Lab','$Units','$SchoolYear','$sta_remarks','$YearLevel','$Semester','$Adviserid','$Studid','$Subject_id_fk','$Currid','$College_id_fk','$Courseid')";
-                    mysqli_query($connection,$insert_sub);
-                }
+                $update_sub_pre = "UPDATE tblstudent_subject SET remarks='Currently Enrolled' WHERE id='$Subject_id_fk' and adviser_id_fk='$Adviserid' and student_id_fk='$Studid' and curr_id_fk='$Currid' and course_id_fk='$Courseid'";
+                mysqli_query($connection,$update_sub_pre);
             }
 
             //send credentials to email
@@ -677,15 +693,15 @@
                 //Server settings 
                 //$mail->SMTPDebug = 2;  
                 $mail->isSMTP();
-                $mail->Host = 'smtp.hostinger.ph';  // Specify main and backup SMTP servers
+                $mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
                 $mail->SMTPAuth = true;         // Enable SMTP authentication
-                $mail->Username = 'info@wmsuics.tech';  // SMTP username
-                $mail->Password = 'tracking_MARK01';  // SMTP password
+                $mail->Username = 'devureteam26@gmail.com';  // SMTP username
+                $mail->Password = 'Devureteam22;';  // SMTP password
                 $mail->SMTPSecure = 'ssl';    // Enable TLS encryption, ssl also accepted
                 $mail->Port = 465;  // TCP port to connect to
                 
                 //email settings
-                $mail->setFrom('info@wmsuics.tech','Online Pre-Advising');
+                $mail->setFrom('devureteam26@gmail.com','Online Pre-Advising');
                 $mail->addAddress($StudEmail);  
 
                 $mail->isHTML(true); // Set email format to HTML
@@ -702,7 +718,6 @@
                             "<th nowrap='nowrap'><b>Lec</b></th>".
                             "<th nowrap='nowrap'><b>Lab</b></th>".
                             "<th nowrap='nowrap'><b>Units</b></th>".
-                            "<th nowrap='nowrap'><b>School Year</b></th>".
                         "</tr></thead><tbody>";
                     $get_add_send = mysqli_query($connection,"SELECT * FROM tbladviser_send_sub_to_stud WHERE status='$Approved' and adviser_id_fk='$Adviserid' and student_id_fk='$Studid' and curri_id_fk='$Currid' and course_id_fk='$Courseid' ORDER BY id");
                     $d = 0;
@@ -710,7 +725,7 @@
                         $d++;
                         $subjectid = $c['subject_id_fk'];
                         $units = $c['units'];
-                        $get_add_subject = mysqli_query($connection,"SELECT * FROM tblsubject WHERE id='$subjectid'");
+                        $get_add_subject = mysqli_query($connection,"SELECT * FROM tblstudent_subject WHERE id='$subjectid'");
                         while($a=mysqli_fetch_array($get_add_subject)){
                 $mail->Body.= 
                         "<tr>".
@@ -719,8 +734,7 @@
                             "<td nowrap='nowrap'><center>".$a['description']."</center></td>".
                             "<td nowrap='nowrap'><center>".$c['lec']."</center></td>".
                             "<td nowrap='nowrap'><center>".$c['lab']."</center></td>".
-                            "<td nowrap='nowrap'><center>".$c['units']."</center></td>".
-                            "<td nowrap='nowrap'><center>".$c['school_year']."</center></td>
+                            "<td nowrap='nowrap'><center>".$c['units']."</center></td>
                         </tr>";
                             }
                         }      
@@ -737,7 +751,6 @@
                                 "<td><center></center></td>".
                                 "<td></td>".
                                 "<td><center><b>".$units_row."</b></center></td>".
-                                "<td></td>".
                                 "</tr>".
                             "</tfoot></table>";
         
@@ -799,7 +812,14 @@
         {
             foreach($all_Sub_id as $sub)
             {
-                $select_subject = mysqli_query($connection,"SELECT * FROM tblsubject WHERE id IN($sub) and curr_id_fk='$Currid' and college_id_fk='$Collegeid' and course_id_fk='$Courseid'");
+                $select_school_year = mysqli_query($connection,"SELECT * FROM tblschool_year WHERE status='Activated'");
+                while($sc=mysqli_fetch_array($select_school_year))
+                {
+                    //$schoolYearId = $sc['school_year'];
+                    $schoolYearId = 0;
+                }
+
+                $select_subject = mysqli_query($connection,"SELECT * FROM tblstudent_subject WHERE id='$sub' and student_id_fk='$Studid' and curr_id_fk='$Currid' and college_id_fk='$Collegeid' and course_id_fk='$Courseid'");
                 while($s = mysqli_fetch_array($select_subject))
                 {
                     $Subid = $s['id'];
@@ -812,28 +832,27 @@
                     $SubSem = $s['semester'];
                 }
 
-                $select_school_year = mysqli_query($connection,"SELECT * FROM tblschool_year WHERE status='Activated'");
-                while($s=mysqli_fetch_array($select_school_year))
+                $select_send_sub = mysqli_query($connection,"SELECT * FROM tbladviser_send_sub_to_stud WHERE adviser_id_fk='$Adviserid' and student_id_fk='$Studid' and subject_id_fk='$sub' and curri_id_fk='$Currid' and course_id_fk='$Courseid'");
+                if(mysqli_num_rows($select_send_sub) > 0)
                 {
-                    $schoolYearId = $s['school_year'];
-                }
-
-                $select_send_sub = mysqli_query($connection,"SELECT * tbladviser_send_sub_to_stud WHERE adviser_id_fk='$Adviserid' and student_id_fk='$Studid' and subject_id_fk='$sub' and curri_id_fk='$Currid' and course_id_fk='$Courseid'");
-                while($a = mysqli_fetch_array($select_send_sub))
-                {
+                    $a = mysqli_fetch_array($select_send_sub);
                     $sub_id = $a['subject_id_fk'];
+                }
+                else
+                {
+                    $sub_id = 0;
                 }
 
                 if($Subid == $sub_id)
                 {
                     $_SESSION['status'] = "Subject Already Exist!!";
-                    $_SESSION['status_code'] = "info";
+                    $_SESSION['status_code'] = "warning";
                     header("location: adviser-sendsubject.php");
                 }
                 else
                 {
-                    $add = "INSERT INTO tbladviser_send_sub_to_stud (lec,lab,units,yearlevel,semester,school_year,status,adviser_id_fk,student_id_fk,subject_id_fk,curri_id_fk,college_id_fk,course_id_fk) VALUES ('$SubLec','$SubLab','$SubUnits','$SubYear','$SubSem','$schoolYearId','$Status','$Adviserid','$Studid','$Subid','$Currid','$Collegeid','$Courseid')";
-                    if(mysqli_query($connection,$add))
+                    $add_sub = "INSERT INTO tbladviser_send_sub_to_stud (lec,lab,units,yearlevel,semester,school_year,status,adviser_id_fk,student_id_fk,subject_id_fk,curri_id_fk,college_id_fk,course_id_fk) VALUES ('$SubLec','$SubLab','$SubUnits','$SubYear','$SubSem','$schoolYearId','$Status','$Adviserid','$Studid','$Subid','$Currid','$Collegeid','$Courseid')";
+                    if(mysqli_query($connection,$add_sub))
                     {
                         $_SESSION['status'] = "Successfully Added!!";
                         $_SESSION['status_code'] = "success";
@@ -973,229 +992,358 @@
             
             foreach($_POST['sub_list_id'] as $updateid)
             {
+                echo $updateid."\n";
                 $grade = $_POST['grades_'.$updateid];
-                $subject_idFK = $_POST['subject_id_fk_'.$updateid];
-                $school_year = $_POST['SY_'.$updateid];
+                //$subject_idFK = $_POST['subject_id_fk_'.$updateid];
 
-                $select_at_sub_grade = mysqli_query($connection,"SELECT * FROM tbladviser_presubject WHERE id='$updateid'");
+                $select_at_sub_grade = mysqli_query($connection,"SELECT * FROM tblstudent_subject WHERE id='$updateid'");
                 while($n=mysqli_fetch_array($select_at_sub_grade))
                 {
                     $up_id_list = $n['id'];
                     $up_grade_list = $n['grades'];
-                    $up_sy_list = $n['school_year'];
+                    $school_year = $n['school_year'];
                 }
-
-                if($updateid && $grade == "0" && $school_year == "" || $updateid && $grade != "0" && $school_year == "")
-                {
-                    $_SESSION['status'] = "Please check if you check and select something in Grades and School Year!!";
-                    $_SESSION['status_code'] = "warning";
-                    header("location: adviser-loadsubjects.php");
-                }
-                else if($updateid == $up_id_list && $grade == $up_grade_list && $school_year != $up_sy_list)
-                {
-                    $update_sy_list = "UPDATE tbladviser_presubject SET school_year='$school_year' WHERE id='$updateid'";
-                    if(mysqli_query($connection,$update_sy_list))
-                    {
-                        $_SESSION['status'] = "Successfully Updated The School Year!!";
-                        $_SESSION['status_code'] = "success";
-                        header("location: adviser-loadsubjects.php");
-                    }
-                    else
-                    {
-                        $_SESSION['status'] = "Unsuccessfully Updated. Please check your input or Contact the Personnel Incharge!!";
-                        $_SESSION['status_code'] = "error";
-                        header("location: adviser-loadsubjects.php");
-                    }
-                }
-                else
-                {  
-                    if($grade == "1.0" || $grade == "1.25" || $grade == "1.50" || $grade == "1.75" || $grade == "2.0" || $grade == "2.25" || $grade == "2.50" || $grade == "2.75" || $grade == "3.0" || $grade == "INC")
-                    {
-                        $Remarks = "PASSED";
-                        $select_act_SY = mysqli_query($connection,"SELECT * FROM tblschool_year WHERE status='Activated'");
-                        while($sy_c = mysqli_fetch_array($select_act_SY))
+                    if($updateid && $grade != "0")
+                    {  
+                        if($grade == "1.0" || $grade == "1.25" || $grade == "1.50" || $grade == "1.75" || $grade == "2.0" || $grade == "2.25" || $grade == "2.50" || $grade == "2.75" || $grade == "3.0" || $grade == "INC")
                         {
-                            $school_year_act = $sy_c['school_year'];
-                        }
-                        $select_sy = mysqli_query($connection,"SELECT * FROM tbladviser_presubject WHERE id='$updateid'");
-                        while($sy=mysqli_fetch_array($select_sy))
-                        {
-                            $SY_SUBID = $sy['id'];
-                            $SY_SUBSY = $sy['school_year']; 
-                            $Units_pre = $sy['units'];
-                            $Grades_pre = $sy['grades'];
-                            $Remarks_pre = $sy['remarks'];
-                            if($Grades_pre == 0 && $Remarks_pre == 0)
+                            $Remarks = "PASSED";
+                            $select_act_SY = mysqli_query($connection,"SELECT * FROM tblschool_year WHERE status='Activated'");
+                            while($sy_c = mysqli_fetch_array($select_act_SY))
                             {
-                                if($grade == "INC")
+                                $school_year_act = 0;
+                            }
+                            $select_sy = mysqli_query($connection,"SELECT * FROM tblstudent_subject WHERE id='$up_id_list'");
+                            while($sy=mysqli_fetch_array($select_sy))
+                            {
+                                $SY_SUBID = $sy['id'];
+                                $SY_SUBSY = $sy['school_year']; 
+                                $Units_pre = $sy['units'];
+                                $Grades_pre = $sy['grades'];
+                                $Remarks_pre = $sy['remarks'];
+                                if($Grades_pre == 0 && $Remarks_pre == 0)
                                 {
-                                    $total_grades = "INC";
+                                    if($grade == "INC")
+                                    {
+                                        $total_grades = "INC";
+                                    }
+                                    else
+                                    {
+                                        $total_grades = $Units_pre * $grade;
+                                    }
+                                }
+                                else if($Grades_pre == 0 && $Remarks_pre == "Recommended")
+                                {
+                                    if($grade == "INC")
+                                    {
+                                        $total_grades = "INC";
+                                    }
+                                    else
+                                    {
+                                        $total_grades = $Units_pre * $grade;
+                                    }
+                                }
+                                else if($Grades_pre != 0 && $Remarks_pre == "PASSED")
+                                {
+                                    if($grade == "INC")
+                                    {
+                                        $total_grades = "INC";
+                                    }
+                                    else
+                                    {
+                                        $total_grades = $Units_pre * $grade;
+                                    }
+                                }
+                                else if($Grades_pre != 0 && $Remarks_pre == "CREDITED")
+                                {
+                                    if($grade == "INC")
+                                    {
+                                        $total_grades = "INC";
+                                    }
+                                    else
+                                    {
+                                        $total_grades = $Units_pre * $grade;
+                                    }
+                                }
+                                else if($Grades_pre != 0 && $Remarks_pre == "FAILED" || $Remarks_pre == "RETAKE")
+                                {
+                                    if($grade == "INC")
+                                    {
+                                        $total_grades = "INC";
+                                    }
+                                    else
+                                    {
+                                        $total_grades = $Units_pre * $grade;
+                                    }
                                 }
                                 else
                                 {
                                     $total_grades = $Units_pre * $grade;
                                 }
                             }
-                            else if($Grades_pre == 0 && $Remarks_pre == "For Creditation")
+                            if($up_id_list == $SY_SUBID && $school_year == $SY_SUBSY)
                             {
-                                if($grade == "INC")
+                                $sql = "UPDATE tblstudent_subject SET grades='$grade',total_grades='$total_grades', remarks='$Remarks', school_year='$school_year' WHERE id='$up_id_list'";
+                            }
+                            else if($up_id_list == $SY_SUBID && $school_year != $SY_SUBSY)
+                            {
+                                $sql = "UPDATE tblstudent_subject SET grades='$grade',total_grades='$total_grades', remarks='$Remarks', school_year='$school_year' WHERE id='$up_id_list'"; 
+                            }
+                            $getisnot_failed = mysqli_query($connection,"SELECT * FROM tblstudent_subject WHERE id='$up_id_list'");
+                            if(mysqli_num_rows($getisnot_failed) > 0)
+                            {
+                                $h=mysqli_fetch_array($getisnot_failed);
+                                $SUbId_Passed = $h['id'];
+                                $CourseId_Passed = $h['course_id_fk'];
+                                $AdviseridFK = $h['adviser_id_fk'];
+                                $check_del_pre = mysqli_query($connection,"SELECT * FROM tbladviser_send_sub_to_stud WHERE subject_id_fk='$SUbId_Passed' and adviser_id_fk='$AdviseridFK' and student_id_fk='$Studid' and curri_id_fk='$Currid' and course_id_fk='$CourseId_Passed'");
+                                if(mysqli_num_rows($check_del_pre) > 0)
                                 {
-                                    $total_grades = "INC";
-                                }
-                                else
-                                {
-                                    $total_grades = $Units_pre * $grade;
+                                    $del_pre_sub = "DELETE FROM tbladviser_send_sub_to_stud WHERE status='Currently Enrolled' and subject_id_fk='$SUbId_Passed' and adviser_id_fk='$AdviseridFK' and student_id_fk='$Studid' and curri_id_fk='$Currid' and course_id_fk='$CourseId_Passed'";
+                                    $select_app_sub = "ALTER TABLE tbladviser_send_sub_to_stud AUTO_INCREMENT = 1";
+                                    if(mysqli_query($connection,$sql) && mysqli_query($connection,$del_pre_sub) && mysqli_query($connection,$select_app_sub))
+                                    {
+                                        $_SESSION['status'] = "Successfully Updated The Grades!!";
+                                        $_SESSION['status_code'] = "success";
+                                        header("location: adviser-loadsubjects.php");
+                                    }
+                                    else
+                                    {
+                                        $_SESSION['status'] = "Unsuccessfully Updated. Please check your input or Contact the Personnel Incharge!!";
+                                        $_SESSION['status_code'] = "error";
+                                        header("location: adviser-loadsubjects.php");
+                                    }
                                 }
                             }
-                            else if($Grades_pre == 0 && $Remarks_pre == "Recommended")
+                            if(mysqli_query($connection,$sql))
                             {
-                                if($grade == "INC")
-                                {
-                                    $total_grades = "INC";
-                                }
-                                else
-                                {
-                                    $total_grades = $Units_pre * $grade;
-                                }
-                            }
-                            else if($Grades_pre != 0 && $Remarks_pre == "PASSED")
-                            {
-                                if($grade == "INC")
-                                {
-                                    $total_grades = "INC";
-                                }
-                                else
-                                {
-                                    $total_grades = $Units_pre * $grade;
-                                }
-                            }
-                            else if($Grades_pre != 0 && $Remarks_pre == "CREDITED")
-                            {
-                                if($grade == "INC")
-                                {
-                                    $total_grades = "INC";
-                                }
-                                else
-                                {
-                                    $total_grades = $Units_pre * $grade;
-                                }
+                                $_SESSION['status'] = "Successfully Updated The Grades!!";
+                                $_SESSION['status_code'] = "success";
+                                header("location: adviser-loadsubjects.php");
                             }
                             else
                             {
-                                $total_grades = $Units_pre * $grade;
+                                $_SESSION['status'] = "Unsuccessfully Updated. Please check your input or Contact the Personnel Incharge!!";
+                                $_SESSION['status_code'] = "error";
+                                header("location: adviser-loadsubjects.php");
                             }
-                        }
-                        if($updateid == $SY_SUBID && $school_year == $SY_SUBSY)
-                        {
-                            $sql = "UPDATE tbladviser_presubject SET grades='$grade',total_grades='$total_grades', remarks='$Remarks', school_year='$school_year' WHERE id='$updateid'";
-                        }
-                        else if($updateid == $SY_SUBID && $school_year != $SY_SUBSY)
-                        {
-                            $sql = "UPDATE tbladviser_presubject SET grades='$grade',total_grades='$total_grades', remarks='$Remarks', school_year='$school_year' WHERE id='$updateid'"; 
-                        }
-                        $getisnot_failed = mysqli_query($connection,"SELECT * FROM tbladviser_presubject WHERE id='$updateid'");
-                        if(mysqli_num_rows($getisnot_failed) > 0)
-                        {
-                            $h=mysqli_fetch_array($getisnot_failed);
-                            $SUbId_Passed = $h['subject_id_fk'];
-                            $CourseId_Passed = $h['course_id_fk'];
-                            $AdviseridFK = $h['adviser_id_fk'];
-                            $check_del_pre = mysqli_query($connection,"SELECT * FROM tbladviser_send_sub_to_stud WHERE subject_id_fk='$SUbId_Passed' and adviser_id_fk='$AdviseridFK' and student_id_fk='$Studid' and curri_id_fk='$Currid' and course_id_fk='$CourseId_Passed'");
-                            if(mysqli_num_rows($check_del_pre) > 0)
+        
+                            $get_sub_app = mysqli_query($connection,"SELECT * FROM tblstudent_subject WHERE id='$updateid' and remarks IN ('PASSED','Recommended') and student_id_fk='$Studid' and curr_id_fk='$Currid'");
+                            foreach($get_sub_app as $ap)
                             {
-                                $del_pre_sub = "DELETE FROM tbladviser_send_sub_to_stud WHERE status='Currently Enrolled' and subject_id_fk='$SUbId_Passed' and adviser_id_fk='$AdviseridFK' and student_id_fk='$Studid' and curri_id_fk='$Currid' and course_id_fk='$CourseId_Passed'";
-                                $select_app_sub = "ALTER TABLE tbladviser_send_sub_to_stud AUTO_INCREMENT = 1";
-                                if(mysqli_query($connection,$sql) && mysqli_query($connection,$del_pre_sub) && mysqli_query($connection,$select_app_sub))
+                                $sub_id_fk = $ap['subject_id_fk'];
+                                $CourSub = $ap['course_id_fk'];
+                                $adviser_id_fk = $ap['adviser_id_fk'];
+                                //For Prerequisite//
+                                $Check_Sub = mysqli_query($connection,"SELECT * FROM tblprereq WHERE subject_id='$sub_id_fk' and curri_id_fk='$Currid' and course_id_fk='$CourSub'");
+                                foreach($Check_Sub as $u)
                                 {
-                                    $_SESSION['status'] = "Successfully Updated The Grades!!";
-                                    $_SESSION['status_code'] = "success";
-                                    header("location: adviser-loadsubjects.php");
-                                }
-                                else
-                                {
-                                    $_SESSION['status'] = "Unsuccessfully Updated. Please check your input or Contact the Personnel Incharge!!";
-                                    $_SESSION['status_code'] = "error";
-                                    header("location: adviser-loadsubjects.php");
-                                }
-                            }
-                        }
-                        if(mysqli_query($connection,$sql))
-                        {
-                            $_SESSION['status'] = "Successfully Updated The Grades!!";
-                            $_SESSION['status_code'] = "success";
-                            header("location: adviser-loadsubjects.php");
-                        }
-                        else
-                        {
-                            $_SESSION['status'] = "Unsuccessfully Updated. Please check your input or Contact the Personnel Incharge!!";
-                            $_SESSION['status_code'] = "error";
-                            header("location: adviser-loadsubjects.php");
-                        }
-    
-                        $get_sub_app = mysqli_query($connection,"SELECT * FROM tbladviser_presubject WHERE remarks='PASSED' and subject_id_fk='$subject_idFK' and student_id='$Studid' and curri_id='$Currid'");
-                        foreach($get_sub_app as $ap)
-                        {
-                            $sub_id_fk = $ap['subject_id_fk'];
-                            $CourSub = $ap['course_id_fk'];
-                            $adviser_id_fk = $ap['adviser_id_fk'];
-                            //For Prerequisite//
-                            $Check_Sub = mysqli_query($connection,"SELECT * FROM tblprereq WHERE subject_id='$sub_id_fk' and curri_id_fk='$Currid' and course_id_fk='$CourSub'");
-                            foreach($Check_Sub as $u)
-                            {
-                                $subject_id = $u['subject_id'];
-                                $subject_code = $u['subject_under'];
-    
-                                $search_sub = mysqli_query($connection,"SELECT * FROM tblsubject WHERE id='$subject_code' and curr_id_fk='$Currid' and course_id_fk='$CourSub'");
-                                foreach($search_sub as $p)
-                                {
-                                    $subjectID = $p['id'];
-                                    $SubjectCode = $p['subject_code'];
-                                    $SubLec = $p['lec'];
-                                    $SubLab = $p['lab'];
-                                    $SubUnits = $p['units'];
-                                    $SubYear = $p['yearlevel'];
-                                    $SubSem = $p['semester'];
-                                    $SubCollege = $p['college_id_fk'];
-                                    $SubCuri = $p['curr_id_fk'];
-                                    $SubCourse = $p['course_id_fk'];
-    
-                                    $check_idSUB = mysqli_query($connection,"SELECT * FROM tbladviser_presubject WHERE subject_id_fk='$subjectID' and adviser_id_fk='$adviser_id_fk' and student_id='$Studid' and curri_id='$SubCuri' and course_id_fk='$SubCourse'");
-                                    if(mysqli_num_rows($check_idSUB) > 0)
+                                    $subject_id = $u['subject_id'];
+                                    $subject_code = $u['subject_under'];
+        
+                                    $search_sub = mysqli_query($connection,"SELECT * FROM tblsubject WHERE id='$subject_code' and curr_id_fk='$Currid' and course_id_fk='$CourSub'");
+                                    foreach($search_sub as $p)
                                     {
-                                        $v=mysqli_fetch_array($check_idSUB);
-                                        $SUB_id_pre = $v['subject_id_fk'];
-                                        $SUB_Adviser_id = $v['adviser_id_fk'];
-                                        $SUB_Stud_id = $v['student_id'];
-                                        $SUB_Course_id = $v['course_id_fk'];
-                                        $SUB_Curri_id = $v['curri_id'];
-                                        $Grades_PRE = $v['grades'];
-                                        $Remarks_PRE = $v['remarks'];                     
-                                    }
-    
-                                    if($subjectID != $SUB_id_pre)
-                                    {
-                                        $del = "DELETE FROM tbladviser_presubject WHERE grades='0' and remarks IN ('Currently Enrolled','Recommended','For Creditation') and school_year='0' and subject_id_fk='$subjectID' and adviser_id_fk='$adviser_id_fk' and student_id='$Studid' and curri_id='$Currid' and course_id_fk='$CourSub'";
-                                        mysqli_query($connection,$del);
-
-                                        $remarks_recommended = "Recommended";
-                                        $sqls = "INSERT INTO tbladviser_presubject (lec,lab,units,remarks,yearlevel,semester,adviser_id_fk,student_id,subject_id_fk,curri_id,college_id_fk,course_id_fk) VALUES ('$SubLec','$SubLab','$SubUnits','$remarks_recommended','$SubYear','$SubSem','$adviser_id_fk','$Studid','$subjectID','$SubCuri','$SubCollege','$SubCourse')";
-                                        $getisnot_failed = mysqli_query($connection,"SELECT * FROM tbladviser_presubject WHERE id='$updateid'");
-                                        if(mysqli_num_rows($getisnot_failed) > 0)
+                                        $subjectID = $p['id'];
+                                        $SubjectCode = $p['subject_code'];
+                                        $SubLec = $p['lec'];
+                                        $SubLab = $p['lab'];
+                                        $SubUnits = $p['units'];
+                                        $SubYear = $p['yearlevel'];
+                                        $SubSem = $p['semester'];
+                                        $SubCollege = $p['college_id_fk'];
+                                        $SubCuri = $p['curr_id_fk'];
+                                        $SubCourse = $p['course_id_fk'];
+        
+                                        $check_idSUB = mysqli_query($connection,"SELECT * FROM tblstudent_subject WHERE subject_id_fk='$subject_code' and adviser_id_fk='$adviser_id_fk' and student_id_fk='$Studid' and curr_id_fk='$SubCuri' and course_id_fk='$SubCourse'");
+                                        if(mysqli_num_rows($check_idSUB) > 0)
                                         {
-                                            $h=mysqli_fetch_array($getisnot_failed);
-                                            $SUbId_Passed = $h['subject_id_fk'];
-                                            $CourseId_Passed = $h['course_id_fk'];
-                                            $AdviseridFK = $h['adviser_id_fk'];
-                                            $check_del_pre = mysqli_query($connection,"SELECT * FROM tbladviser_send_sub_to_stud WHERE subject_id_fk='$SUbId_Passed' and status='Approved' and adviser_id_fk='$AdviseridFK' and student_id_fk='$Studid' and curri_id_fk='$Currid' and course_id_fk='$CourseId_Passed'");
-                                            if(mysqli_num_rows($check_del_pre) > 0)
-                                            {
-                                                $del_pre_sub = "DELETE FROM tbladviser_send_sub_to_stud WHERE status='Currently Enrolled' and subject_id_fk='$SUbId_Passed' and adviser_id_fk='$AdviseridFK' and student_id_fk='$Studid' and curri_id_fk='$Currid' and course_id_fk='$CourseId_Passed'";
-                                                $select_app_sub = "ALTER TABLE tbladviser_send_sub_to_stud AUTO_INCREMENT = 1";
-                                                mysqli_query($connection,$del_pre_sub);
-                                                mysqli_query($connection,$select_app_sub);
-                                            }
+                                            $v=mysqli_fetch_array($check_idSUB);
+                                            $SUB_ID_stu_sub = $v['id'];
+                                            $SUB_id_pre = $v['subject_id_fk'];
+                                            $SUB_Adviser_id = $v['adviser_id_fk'];
+                                            $SUB_Stud_id = $v['student_id'];
+                                            $SUB_Course_id = $v['course_id_fk'];
+                                            $SUB_Curri_id = $v['curri_id'];
+                                            $Grades_PRE = $v['grades'];
+                                            $Remarks_PRE = $v['remarks'];                     
                                         }
-                                        if(mysqli_query($connection,$sqls))
+        
+
+                                            $remarks_recommended = "Recommended";
+                                            $sqls = "UPDATE tblstudent_subject SET remarks='$remarks_recommended' WHERE id='$SUB_ID_stu_sub' and adviser_id_fk='$adviser_id_fk' and student_id_fk='$Studid' and curr_id_fk='$SubCuri' and course_id_fk='$SubCourse'";
+                                            $getisnot_failed = mysqli_query($connection,"SELECT * FROM tblstudent_subject WHERE id='$updateid' and adviser_id_fk='$adviser_id_fk' and student_id_fk='$Studid' and curr_id_fk='$SubCuri' and course_id_fk='$SubCourse'");
+                                            if(mysqli_num_rows($getisnot_failed) > 0)
+                                            {
+                                                $h=mysqli_fetch_array($getisnot_failed);
+                                                $SUbId_Passed = $h['subject_id_fk'];
+                                                $CourseId_Passed = $h['course_id_fk'];
+                                                $AdviseridFK = $h['adviser_id_fk'];
+                                                $check_del_pre = mysqli_query($connection,"SELECT * FROM tbladviser_send_sub_to_stud WHERE subject_id_fk='$SUbId_Passed' and status='Currently Enrolled' and adviser_id_fk='$AdviseridFK' and student_id_fk='$Studid' and curri_id_fk='$Currid' and course_id_fk='$CourseId_Passed'");
+                                                if(mysqli_num_rows($check_del_pre) > 0)
+                                                {
+                                                    $del_pre_sub = "DELETE FROM tbladviser_send_sub_to_stud WHERE status='Currently Enrolled' and subject_id_fk='$SUbId_Passed' and adviser_id_fk='$AdviseridFK' and student_id_fk='$Studid' and curri_id_fk='$Currid' and course_id_fk='$CourseId_Passed'";
+                                                    $select_app_sub = "ALTER TABLE tbladviser_send_sub_to_stud AUTO_INCREMENT = 1";
+                                                    mysqli_query($connection,$del_pre_sub);
+                                                    mysqli_query($connection,$select_app_sub);
+                                                }
+                                            }
+                                            if(mysqli_query($connection,$sqls))
+                                            {
+                                                $_SESSION['status'] = "Successfully Updated The Grades!!";
+                                                $_SESSION['status_code'] = "success";
+                                                header("location: adviser-loadsubjects.php");
+                                            } 
+                                            else
+                                            {
+                                                $_SESSION['status'] = "Unsuccessfully Updated. Please check your input or Contact the Personnel Incharge!! is not connected";
+                                                $_SESSION['status_code'] = "error";
+                                                header("location: adviser-loadsubjects.php");
+                                            } 
+       
+                                    }
+                                }
+                            }
+                        }
+                        else if($grade == "CREDITED")
+                        {
+                            $Remarks = "CREDITED";
+                            $get_stud_info = mysqli_query($connection,"SELECT * FROM tblstudent_list WHERE id='$Studid'");
+                            while($y = mysqli_fetch_array($get_stud_info))
+                            {
+                                $stud_adviser_id = $y['adviser_id_fk'];
+                                $stud_course_id = $y['course_id_fk'];
+                                $stud_college_id = $y['college_id_fk'];
+                            }
+                            $get_sub_in_student_sub = mysqli_query($connection,"SELECT * FROM tblstudent_subject WHERE id='$updateid'");
+                            while($z = mysqli_fetch_array($get_sub_in_student_sub))
+                            {
+                                $stud_sub_id = $z['id'];
+                                $stud_sub_lec = $z['lec'];
+                                $stud_sub_lab = $z['lab'];
+                                $stud_sub_units = $z['units'];
+                                $stud_sub_yearlevel = $z['yearlevel'];
+                                $stud_sub_semester = $z['semester'];
+                                $school_year = 0;
+                            }
+
+                            $check_if_failed_sub = mysqli_query($connection,"SELECT * FROM tblstudent_subject WHERE student_id_fk='$Studid' and curr_id_fk='$Currid' and course_id_fk='$stud_course_id' and remarks IN ('FAILED','RETAKE')");
+                            while($y = mysqli_fetch_array($check_if_failed_sub))
+                            {
+                                $sub_id_del = $y['id'];
+                                $del_sub_with_sub_id_fk = $y['subject_id_fk'];
+                                $sub_attempt_num = $y['attempt'];
+                                if($sub_id_del != $updateid)
+                                {
+                                    $del_failed_sub_retake = "DELETE FROM tblstudent_subject WHERE id='$sub_id_del' and student_id_fk='$Studid' and curr_id_fk='$Currid' and course_id_fk='$stud_course_id'";
+                                    mysqli_query($connection,$del_failed_sub_retake);
+                                }
+                            }
+
+                            $select_sy = mysqli_query($connection,"SELECT * FROM tblstudent_subject WHERE id='$updateid'");
+                            while($sy=mysqli_fetch_array($select_sy))
+                            {
+                                $SY_SUBID = $sy['id'];
+                                $SY_SUBSY = $sy['school_year']; 
+                                $Units_pre = $sy['units'];
+                                $Grades_pre = $sy['grades'];
+                                $Remarks_pre = $sy['remarks'];
+                                if($Grades_pre == 0 && $Remarks_pre == 0)
+                                {
+                                    if($grade == "CREDITED")
+                                    {
+                                        $total_grades = "CREDITED";
+                                    }
+                                    else
+                                    {
+                                        $total_grades = $Units_pre * $grade;
+                                    }
+                                }
+                                else if($Grades_pre == 0 && $Remarks_pre == "Recommended")
+                                {
+                                    if($grade == "CREDITED")
+                                    {
+                                        $total_grades = "CREDITED";
+                                    }
+                                    else
+                                    {
+                                        $total_grades = $Units_pre * $grade;
+                                    }
+                                }
+                                else if($Grades_pre != 0 && $Remarks_pre == "PASSED")
+                                {
+                                    if($grade == "CREDITED")
+                                    {
+                                        $total_grades = "CREDITED";
+                                    }
+                                    else
+                                    {
+                                        $total_grades = $Units_pre * $grade;
+                                    }
+                                }
+                                else if($Grades_pre != 0 && $Remarks_pre == "CREDITED")
+                                {
+                                    if($grade == "CREDITED")
+                                    {
+                                        $total_grades = "CREDITED";
+                                    }
+                                    else
+                                    {
+                                        $total_grades = $Units_pre * $grade;
+                                    }
+                                }
+                                else if($Grades_pre != 0 && $Remarks_pre == "FAILED")
+                                {
+                                    if($grade == "CREDITED")
+                                    {
+                                        $total_grades = "CREDITED";
+                                    }
+                                    else
+                                    {
+                                        $total_grades = $Units_pre * $grade;
+                                    }
+                                }
+                            }
+                            $sql = "UPDATE tblstudent_subject SET grades='$grade',total_grades='$total_grades',school_year='$school_year', remarks='$Remarks' WHERE id='$updateid'";   
+                            if(mysqli_query($connection,$sql))
+                            {
+                                $_SESSION['status'] = "Successfully Updated The Grades!!";
+                                $_SESSION['status_code'] = "success";
+                                header("location: adviser-loadsubjects.php");
+                            }   
+        
+                            $get_sub_app = mysqli_query($connection,"SELECT * FROM tblstudent_subject WHERE id='$updateid' and remarks IN ('CREDITED','Recommended') and student_id_fk='$Studid' and curr_id_fk='$Currid' and course_id_fk='$stud_course_id'");
+                            foreach($get_sub_app as $ap)
+                            {
+                                $sub_id_fk = $ap['subject_id_fk'];
+                                $CourSub = $ap['course_id_fk'];
+                                $adviser_id_fk = $ap['adviser_id_fk'];
+                                //For Prerequisite//
+                                $Check_Sub = mysqli_query($connection,"SELECT * FROM tblprereq WHERE subject_id='$sub_id_fk' and curri_id_fk='$Currid' and course_id_fk='$CourSub'");
+                                foreach($Check_Sub as $u)
+                                {
+                                    $subject_id = $u['subject_id'];
+                                    $subject_code = $u['subject_under'];
+        
+                                    $search_sub_curriculum = mysqli_query($connection,"SELECT * FROM tblsubject WHERE id='$subject_code' and curr_id_fk='$Currid' and course_id_fk='$CourSub'");
+                                    foreach($search_sub_curriculum as $p)
+                                    {
+                                        $subjectID = $p['id'];
+                                        $SubLec = $p['lec'];
+                                        $SubLab = $p['lab'];
+                                        $SubUnits = $p['units'];
+                                        $SubYear = $p['yearlevel'];
+                                        $subjectID = $p['semester'];
+                                        $SubCollege = $p['college_id_fk'];
+                                        $SubCuri = $p['curr_id_fk'];
+                                        $SubCourse = $p['course_id_fk'];
+                                        $SubjectCode = $p['subject_code'];
+
+                                        $remarks_auto = "Recommended";
+
+                                        $del_pre_sub_cred = "DELETE FROM tbladviser_send_sub_to_stud WHERE status='Currently Enrolled' and subject_id_fk='$student_subid' and adviser_id_fk='$adviser_id_fk' and student_id_fk='$Studid' and curri_id_fk='$SubCuri' and course_id_fk='$SubCourse'";
+                                        $auto_update_remarks_sub = "UPDATE tblstudent_subject SET remarks='$remarks_auto' WHERE subject_id_fk='$subject_code' and student_id_fk='$Studid' and curr_id_fk='$SubCuri' and course_id_fk='$SubCourse'";
+                                        if(mysqli_query($connection,$auto_update_remarks_sub) && mysqli_query($connection,$del_pre_sub_cred))
                                         {
                                             $_SESSION['status'] = "Successfully Updated The Grades!!";
                                             $_SESSION['status_code'] = "success";
@@ -1207,191 +1355,122 @@
                                             $_SESSION['status_code'] = "error";
                                             header("location: adviser-loadsubjects.php");
                                         } 
-                                    }           
+                                    }
                                 }
                             }
                         }
-                    }
-                    else if($grade == "CREDITED")
-                    {
-                        $Remarks = "CREDITED";
-                        $select_sy = mysqli_query($connection,"SELECT * FROM tbladviser_presubject WHERE id='$updateid'");
-                        while($sy=mysqli_fetch_array($select_sy))
+                        else if($grade == "5.0" || $grade == "DRP")
                         {
-                            $SY_SUBID = $sy['id'];
-                            $SY_SUBSY = $sy['school_year']; 
-                            $Units_pre = $sy['units'];
-                            $Grades_pre = $sy['grades'];
-                            $Remarks_pre = $sy['remarks'];
-                            if($Grades_pre == 0 && $Remarks_pre == "For Creditation")
+                            $Remarks = "FAILED";
+                            $select_act_SY = mysqli_query($connection,"SELECT * FROM tblschool_year WHERE status='Activated'");
+                            while($sy_c = mysqli_fetch_array($select_act_SY))
                             {
-                                if($grade == "CREDITED")
-                                {
-                                    $total_grades = "CREDITED";
-                                }
-                                else
-                                {
-                                    $total_grades = $Units_pre * $grade;
-                                }
+                                $school_year_act = 0;
                             }
-                            else if($Grades_pre == 0 && $Remarks_pre == "Recommended")
+                            $get_stud_info = mysqli_query($connection,"SELECT * FROM tblstudent_list WHERE id='$Studid'");
+                            while($y = mysqli_fetch_array($get_stud_info))
                             {
-                                if($grade == "CREDITED")
-                                {
-                                    $total_grades = "CREDITED";
-                                }
-                                else
-                                {
-                                    $total_grades = $Units_pre * $grade;
-                                }
+                                $stud_adviser_id = $y['adviser_id_fk'];
+                                $stud_course_id = $y['course_id_fk'];
+                                $stud_college_id = $y['college_id_fk'];
                             }
-                            else if($Grades_pre != 0 && $Remarks_pre == "PASSED")
+                            $select_sy = mysqli_query($connection,"SELECT * FROM tblstudent_subject WHERE id='$updateid'");
+                            while($sy=mysqli_fetch_array($select_sy))
                             {
-                                if($grade == "CREDITED")
+                                $SY_SUBID = $sy['id'];
+                                $SY_SUBSY = $sy['school_year']; 
+                                $Units_pre = $sy['units'];
+                                $Grades_pre = $sy['grades'];
+                                $Remarks_pre = $sy['remarks'];
+                                if($Grades_pre == 0 && $Remarks_pre == 0)
                                 {
-                                    $total_grades = "CREDITED";
-                                }
-                                else
-                                {
-                                    $total_grades = $Units_pre * $grade;
-                                }
-                            }
-                            else if($Grades_pre != 0 && $Remarks_pre == "CREDITED")
-                            {
-                                if($grade == "CREDITED")
-                                {
-                                    $total_grades = "CREDITED";
-                                }
-                                else
-                                {
-                                    $total_grades = $Units_pre * $grade;
-                                }
-                            }
-                        }
-                        $sql = "UPDATE tbladviser_presubject SET grades='$grade',total_grades='$total_grades',school_year='$school_year', remarks='$Remarks' WHERE id='$updateid'";   
-                        if(mysqli_query($connection,$sql))
-                        {
-                            $_SESSION['status'] = "Successfully Updated The Grades!!";
-                            $_SESSION['status_code'] = "success";
-                            header("location: adviser-loadsubjects.php");
-                        }   
-    
-                        $get_sub_app = mysqli_query($connection,"SELECT * FROM tbladviser_presubject WHERE remarks IN ('For Creditation','CREDITED','Recommended') and subject_id_fk='$subject_idFK' and student_id='$Studid' and curri_id='$Currid'");
-                        foreach($get_sub_app as $ap)
-                        {
-                            $sub_id_fk = $ap['subject_id_fk'];
-                            $CourSub = $ap['course_id_fk'];
-                            $adviser_id_fk = $ap['adviser_id_fk'];
-                            //For Prerequisite//
-                            $Check_Sub = mysqli_query($connection,"SELECT * FROM tblprereq WHERE subject_id='$sub_id_fk' and curri_id_fk='$Currid' and course_id_fk='$CourSub'");
-                            foreach($Check_Sub as $u)
-                            {
-                                $subject_id = $u['subject_id'];
-                                $subject_code = $u['subject_under'];
-    
-                                $search_sub = mysqli_query($connection,"SELECT * FROM tblsubject WHERE id='$subject_code' and curr_id_fk='$Currid' and course_id_fk='$CourSub'");
-                                foreach($search_sub as $p)
-                                {
-                                    $subjectID = $p['id'];
-                                    $SubjectCode = $p['subject_code'];
-                                    $SubLec = $p['lec'];
-                                    $SubLab = $p['lab'];
-                                    $SubUnits = $p['units'];
-                                    $SubYear = $p['yearlevel'];
-                                    $SubSem = $p['semester'];
-                                    $SubCollege = $p['college_id_fk'];
-                                    $SubCuri = $p['curr_id_fk'];
-                                    $SubCourse = $p['course_id_fk'];
-    
-                                    $remarks_recommended = "Recommended";
-                                    $del_pre_sub_cred = "DELETE FROM tbladviser_send_sub_to_stud WHERE status='Currently Enrolled' and subject_id_fk='$sub_id_fk' and adviser_id_fk='$adviser_id_fk' and student_id_fk='$Studid' and curri_id_fk='$SubCuri' and course_id_fk='$SubCourse'";
-                                    $sqls = "INSERT INTO tbladviser_presubject (lec,lab,units,remarks,yearlevel,semester,adviser_id_fk,student_id,subject_id_fk,curri_id,college_id_fk,course_id_fk) VALUES ('$SubLec','$SubLab','$SubUnits','$remarks_recommended','$SubYear','$SubSem','$adviser_id_fk','$Studid','$subjectID','$SubCuri','$SubCollege','$SubCourse')";
-                                    if(mysqli_query($connection,$sqls) && mysqli_query($connection,$del_pre_sub_cred))
+                                    if($grade == "5.0")
                                     {
-                                        $_SESSION['status'] = "Successfully Updated The Grades!!";
-                                        $_SESSION['status_code'] = "success";
-                                        header("location: adviser-loadsubjects.php");
-                                    } 
+                                        $total_grades = "FAILED";
+                                    }
+                                    else if($grade == "DRP")
+                                    {
+                                        $total_grades = "FAILED";
+                                    }
                                     else
                                     {
-                                        $_SESSION['status'] = "Unsuccessfully Updated. Please check your input or Contact the Personnel Incharge!!";
-                                        $_SESSION['status_code'] = "error";
-                                        header("location: adviser-loadsubjects.php");
-                                    }    
+                                        $total_grades = $Units_pre * $grade;
+                                    }
+                                }
+                                else if($Grades_pre == 0 && $Remarks_pre == "Currently Enrolled")
+                                {
+                                    if($grade == "5.0")
+                                    {
+                                        $total_grades = "FAILED";
+                                    }
+                                    else if($grade == "DRP")
+                                    {
+                                        $total_grades = "FAILED";
+                                    }
+                                    else
+                                    {
+                                        $total_grades = $Units_pre * $grade;
+                                    }
+                                }
+                                else if($Grades_pre != 0 && $Remarks_pre == "PASSED")
+                                {
+                                    if($grade == "5.0")
+                                    {
+                                        $total_grades = "FAILED";
+                                    }
+                                    else if($grade == "DRP")
+                                    {
+                                        $total_grades = "FAILED";
+                                    }
+                                    else
+                                    {
+                                        $total_grades = $Units_pre * $grade;
+                                    }
+                                }
+                                else if($Grades_pre != 0 && $Remarks_pre == "FAILED")
+                                {
+                                    if($grade == "5.0")
+                                    {
+                                        $total_grades = "FAILED";
+                                    }
+                                    else if($grade == "DRP")
+                                    {
+                                        $total_grades = "FAILED";
+                                    }
+                                    else
+                                    {
+                                        $total_grades = $Units_pre * $grade;
+                                    }
                                 }
                             }
-                        }
-                    }
-                    else if($grade == "5.0" || $grade == "DRP")
-                    {
-                        $Remarks = "FAILED";
-                        $select_sy = mysqli_query($connection,"SELECT * FROM tbladviser_presubject WHERE id='$updateid'");
-                        while($sy=mysqli_fetch_array($select_sy))
-                        {
-                            $SY_SUBID = $sy['id'];
-                            $SY_SUBSY = $sy['school_year']; 
-                            $Units_pre = $sy['units'];
-                            $Grades_pre = $sy['grades'];
-                            $Remarks_pre = $sy['remarks'];
-                            if($Grades_pre == 0 && $Remarks_pre == 0)
+                            $sql = "UPDATE tblstudent_subject SET grades='$grade',total_grades='$total_grades',school_year='$school_year_act', remarks='$Remarks' WHERE id='$updateid'";   
+                            mysqli_query($connection,$sql);
+                            $get_and_save_sub = mysqli_query($connection,"SELECT * FROM tblstudent_subject WHERE id='$updateid' and remarks='FAILED'");
+                            while($p = mysqli_fetch_array($get_and_save_sub))
                             {
-                                if($grade == "5.0")
-                                {
-                                    $total_grades = "FAILED";
-                                }
-                                else if($grade == "DRP")
-                                {
-                                    $total_grades = "FAILED";
-                                }
-                                else
-                                {
-                                    $total_grades = $Units_pre * $grade;
-                                }
+                                $sub_save_id = $p['id'];
+                                $sub_save_code = $p['subject_code'];
+                                $sub_save_des = $p['description'];
+                                $sub_save_lec = $p['lec'];
+                                $sub_save_lab = $p['lab'];
+                                $sub_save_units = $p['units'];
+                                $sub_save_yr = $p['yearlevel'];
+                                $sub_save_sem = $p['semester'];
+                                $sub_save_prereq = $p['prerequisite'];
+                                $sub_save_status = $p['status'];
+                                $sub_save_attempt = $p['attempt'];
+                                $sub_save_studid = $p['student_id_fk'];
+                                $sub_save_subidfk = $p['subject_id_fk'];
+                                $sub_save_currid = $p['curr_id_fk'];
+                                $sub_save_colid = $p['college_id_fk'];
+                                $sub_save_courseid = $p['course_id_fk'];
                             }
-                            else if($Grades_pre != 0 && $Remarks_pre == "PASSED")
+                            if($sub_save_attempt == 0)
                             {
-                                if($grade == "5.0")
-                                {
-                                    $total_grades = "FAILED";
-                                }
-                                else if($grade == "DRP")
-                                {
-                                    $total_grades = "FAILED";
-                                }
-                                else
-                                {
-                                    $total_grades = $Units_pre * $grade;
-                                }
-                            }
-                            else if($Grades_pre != 0 && $Remarks_pre == "FAILED")
-                            {
-                                if($grade == "5.0")
-                                {
-                                    $total_grades = "FAILED";
-                                }
-                                else if($grade == "DRP")
-                                {
-                                    $total_grades = "FAILED";
-                                }
-                                else
-                                {
-                                    $total_grades = $Units_pre * $grade;
-                                }
-                            }
-                        }
-                        $sql = "UPDATE tbladviser_presubject SET grades='$grade',total_grades='$total_grades', remarks='$Remarks' WHERE id='$updateid'";   
-                        $getisnot_failed = mysqli_query($connection,"SELECT * FROM tbladviser_presubject WHERE id='$updateid'");
-                        foreach($getisnot_failed as $h)
-                        {
-                            $SUbId_Passed = $h['subject_id_fk'];
-                            $CourseId_Passed = $h['course_id_fk'];
-                            $AdviserIDFK = $h['adviser_id_fk'];
-                            $check_del_pre = mysqli_query($connection,"SELECT * FROM tbladviser_send_sub_to_stud WHERE subject_id_fk='$SUbId_Passed' and status='Currently Enrolled' and adviser_id_fk='$AdviserIDFK' and student_id_fk='$Studid' and curri_id_fk='$Currid' and course_id_fk='$CourseId_Passed'");
-                            if(mysqli_num_rows($check_del_pre) > 0)
-                            {
-                                $del_pre_sub = "DELETE FROM tbladviser_send_sub_to_stud WHERE status='Currently Enrolled' and subject_id_fk='$SUbId_Passed' and adviser_id_fk='$AdviserIDFK' and student_id_fk='$Studid' and curri_id_fk='$Currid' and course_id_fk='$CourseId_Passed'";
-                                $select_app_sub = "ALTER TABLE tbladviser_send_sub_to_stud AUTO_INCREMENT = 1";
-                                if(mysqli_query($connection,$sql) && mysqli_query($connection,$del_pre_sub) && mysqli_query($connection,$select_app_sub))
+                                $attempt_check = 1;
+                                $sub_save_remarks = "RETAKE";
+                                $save_attempt_sub = "INSERT INTO tblstudent_subject (subject_code,description,lec,lab,units,yearlevel,semester,prerequisite,status,remarks,attempt,student_id_fk,adviser_id_fk,subject_id_fk,curr_id_fk,college_id_fk,course_id_fk) VALUES ('$sub_save_code','$sub_save_des','$sub_save_lec','$sub_save_lab','$sub_save_units','$sub_save_yr','$sub_save_sem','$sub_save_prereq','$sub_save_status','$sub_save_remarks','$attempt_check','$sub_save_studid','$stud_adviser_id','$sub_save_subidfk','$sub_save_currid','$sub_save_colid','$sub_save_courseid')";
+                                if(mysqli_query($connection,$save_attempt_sub))
                                 {
                                     $_SESSION['status'] = "Successfully Updated The Grades!!";
                                     $_SESSION['status_code'] = "success";
@@ -1404,21 +1483,58 @@
                                     header("location: adviser-loadsubjects.php");
                                 }
                             }
-                        } 
-                        if(mysqli_query($connection,$sql))
-                        {
-                            $_SESSION['status'] = "Successfully Updated The Grades!!";
-                            $_SESSION['status_code'] = "success";
-                            header("location: adviser-loadsubjects.php");
-                        }
-                        else
-                        {
-                            $_SESSION['status'] = "Unsuccessfully Updated. Please check your input or Contact the Personnel Incharge!!";
-                            $_SESSION['status_code'] = "error";
-                            header("location: adviser-loadsubjects.php");
+                            else
+                            {
+                                $attempt_check = $sub_save_attempt + 1;
+                                $sub_save_remarks = "RETAKE";
+                                $save_attempt_sub = "INSERT INTO tblstudent_subject (subject_code,description,lec,lab,units,yearlevel,semester,prerequisite,status,remarks,attempt,student_id_fk,adviser_id_fk,subject_id_fk,curr_id_fk,college_id_fk,course_id_fk) VALUES ('$sub_save_code','$sub_save_des','$sub_save_lec','$sub_save_lab','$sub_save_units','$sub_save_yr','$sub_save_sem','$sub_save_prereq','$sub_save_status','$sub_save_remarks','$attempt_check','$sub_save_studid','$stud_adviser_id','$sub_save_subidfk','$sub_save_currid','$sub_save_colid','$sub_save_courseid')";
+                                if(mysqli_query($connection,$save_attempt_sub))
+                                {
+                                    $_SESSION['status'] = "Successfully Updated The Grades!!";
+                                    $_SESSION['status_code'] = "success";
+                                    header("location: adviser-loadsubjects.php");
+                                }
+                                else
+                                {
+                                    $_SESSION['status'] = "Unsuccessfully Updated. Please check your input or Contact the Personnel Incharge!!";
+                                    $_SESSION['status_code'] = "error";
+                                    header("location: adviser-loadsubjects.php");
+                                }
+                            }
+                            $getisnot_failed = mysqli_query($connection,"SELECT * FROM tblstudent_subject WHERE id='$updateid' and student_id_fk='$Studid' and curri_id_fk='$Currid' and course_id_fk='$stud_course_id'");
+                            foreach($getisnot_failed as $h)
+                            {
+                                $SUbId_Passed = $h['id'];
+                                $CourseId_Passed = $h['course_id_fk'];
+                                $AdviserIDFK = $h['adviser_id_fk'];
+                                $check_del_pre = mysqli_query($connection,"SELECT * FROM tbladviser_send_sub_to_stud WHERE subject_id_fk='$SUbId_Passed' and status='Currently Enrolled' and adviser_id_fk='$AdviserIDFK' and student_id_fk='$Studid' and curri_id_fk='$Currid' and course_id_fk='$CourseId_Passed'");
+                                if(mysqli_num_rows($check_del_pre) > 0)
+                                {
+                                    $del_pre_sub = "DELETE FROM tbladviser_send_sub_to_stud WHERE status='Currently Enrolled' and subject_id_fk='$SUbId_Passed' and adviser_id_fk='$AdviserIDFK' and student_id_fk='$Studid' and curri_id_fk='$Currid' and course_id_fk='$CourseId_Passed'";
+                                    $select_app_sub = "ALTER TABLE tbladviser_send_sub_to_stud AUTO_INCREMENT = 1";
+                                    if(mysqli_query($connection,$del_pre_sub) && mysqli_query($connection,$select_app_sub))
+                                    {
+                                        $_SESSION['status'] = "Successfully Updated The Grades!!";
+                                        $_SESSION['status_code'] = "success";
+                                        header("location: adviser-loadsubjects.php");
+                                    }
+                                    else
+                                    {
+                                        $_SESSION['status'] = "Unsuccessfully Updated. Please check your input or Contact the Personnel Incharge!!";
+                                        $_SESSION['status_code'] = "error";
+                                        header("location: adviser-loadsubjects.php");
+                                    }
+                                }
+                            } 
                         }
                     }
-                }
+                    else
+                    {
+                        //$_SESSION['status'] = "No Input of Grades!!";
+                        //$_SESSION['status_code'] = "warning";
+                        header("location: adviser-loadsubjects.php");
+                    }
+
             }
         }
     }
@@ -1759,16 +1875,16 @@ if(isset($_POST['disapproved_grades']))
     $mail = new PHPMailer();
     
     $mail->isSMTP();
-    $mail->Host = 'smtp.hostinger.ph';  // Specify main and backup SMTP servers
+    $mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
     $mail->SMTPAuth = true;         // Enable SMTP authentication
-    $mail->Username = 'info@wmsuics.tech';  // SMTP username
-    $mail->Password = 'tracking_MARK01';  // SMTP password
+    $mail->Username = 'devureteam26@gmail.com';  // SMTP username
+    $mail->Password = 'Devureteam22;';  // SMTP password
     $mail->Port = 465;  // TCP port to connect to
     $mail->SMTPSecure = 'ssl';  // Enable TLS encryption, ssl also accepted
     
     //email settings
     $mail->isHTML(true); // Set email format to HTML
-    $mail->setFrom('info@wmsuics.tech','Online Pre-Advising');
+    $mail->setFrom('devureteam26@gmail.com','Online Pre-Advising');
     $mail->addAddress($Student_email);  
 
     $mail->Subject = 'Online Pre-Advising';
