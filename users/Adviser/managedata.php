@@ -343,11 +343,9 @@
         $c = "ALTER TABLE tblrequest_account AUTO_INCREMENT = $reqid";
 
         //send credentials to email
-        require_once '../../PHPMailer/PHPMailer.php';
-        require_once '../../PHPMailer/SMTP.php';
-        require_once '../../PHPMailer/Exception.php';
+        require '../../vendor/autoload.php';
         
-        $mail = new PHPMailer();
+        $mail = new PHPMailer(true);
         
         $mail->isSMTP();
         $mail->Host = 'smtp.hostinger.ph';  // Specify main and backup SMTP servers
@@ -411,14 +409,12 @@
             $reqid = $fa['id'];
         }
 
-        $d = "ALTER TABLE tblrequest_account AUTO_INCREMENT = $reqid";
+        $d = "ALTER TABLE tblrequest_account AUTO_INCREMENT = 1";
 
         //send credentials to email
-        require_once '../../PHPMailer/PHPMailer.php';
-        require_once '../../PHPMailer/SMTP.php';
-        require_once '../../PHPMailer/Exception.php';
+        require '../../vendor/autoload.php';
         
-        $mail = new PHPMailer();
+        $mail = new PHPMailer(true);
         
         $mail->isSMTP();
         $mail->Host = 'smtp.hostinger.ph';  // Specify main and backup SMTP servers
