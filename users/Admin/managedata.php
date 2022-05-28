@@ -1,5 +1,7 @@
 <?php
-    use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\SMTP;
+    use PHPMailer\PHPMailer\Exception;
 
     session_start();
     include "../../source/includes/config.php";
