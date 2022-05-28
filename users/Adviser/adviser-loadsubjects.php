@@ -3825,6 +3825,8 @@
                                         <th scope="col"><center>Lec</center></th>
                                         <th scope="col"><center>Lab</center></th>
                                         <th scope="col"><center>Units</center></th>
+					<th scope="col"><center>YearLevel</center></th>
+					<th scope="col"><center>Semester</center></th>
                                         <th hidden><center>School Year</center></th>
                                     </tr>
                                 </thead>
@@ -3846,6 +3848,8 @@
                             $SubLab = $sa['lab'];
                             $SubUnits = $sa['units'];
                             $SubPreq = $sa['prerequisite'];
+				$SubYR = $sa['yearlevel'];
+				$SubSemester = $sa['semester'];
                         }   
             ?>
                                     <tr>
@@ -3855,6 +3859,8 @@
                                         <td><center><?php echo $SubLec?></center></td>
                                         <td><center><?php echo $SubLab?></center></td>
                                         <td><center><?php echo $SubUnits?></center></td>
+					<td><center><?php echo $SubYR?></center></td>
+                                        <td><center><?php echo $SubSemester?></center></td>
                                         <td hidden><center><?php echo $SY?></center></td>
                                     </tr>
             <?php
@@ -3875,6 +3881,8 @@
                                         <td><center></center></td>
                                         <td><center></center></td>
                                         <td class="fw-bold"><center><?php echo $Total_units?></center></td>
+					<td><center></center></td>
+                                        <td><center></center></td>
                                         <td hidden></td>
                                     </tr>
                                 </tfoot>
