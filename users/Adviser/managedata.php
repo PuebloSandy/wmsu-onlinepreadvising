@@ -1169,7 +1169,8 @@
                                             $Remarks_PRE = $v['remarks'];                     
                                         }
         
-
+                                        if($subject_code == $SUB_ID_stu_sub && $Grades_PRE == 0 && $Remarks_PRE == "Not Yet Taken")
+                                        {
                                             $remarks_recommended = "Recommended";
                                             $sqls = "UPDATE tblstudent_subject SET remarks='$remarks_recommended' WHERE id='$SUB_ID_stu_sub' and adviser_id_fk='$adviser_id_fk' and student_id_fk='$Studid' and curr_id_fk='$SubCuri' and course_id_fk='$SubCourse'";
                                             $getisnot_failed = mysqli_query($connection,"SELECT * FROM tblstudent_subject WHERE id='$updateid' and adviser_id_fk='$adviser_id_fk' and student_id_fk='$Studid' and curr_id_fk='$SubCuri' and course_id_fk='$SubCourse'");
@@ -1200,7 +1201,7 @@
                                                 $_SESSION['status_code'] = "error";
                                                 header("location: adviser-loadsubjects.php");
                                             } 
-       
+                                        }
                                     }
                                 }
                             }
@@ -1225,19 +1226,6 @@
                                 $stud_sub_yearlevel = $z['yearlevel'];
                                 $stud_sub_semester = $z['semester'];
                                 $school_year = 0;
-                            }
-
-                            $check_if_failed_sub = mysqli_query($connection,"SELECT * FROM tblstudent_subject WHERE student_id_fk='$Studid' and curr_id_fk='$Currid' and course_id_fk='$stud_course_id' and remarks IN ('FAILED','RETAKE')");
-                            while($y = mysqli_fetch_array($check_if_failed_sub))
-                            {
-                                $sub_id_del = $y['id'];
-                                $del_sub_with_sub_id_fk = $y['subject_id_fk'];
-                                $sub_attempt_num = $y['attempt'];
-                                if($sub_id_del != $updateid)
-                                {
-                                    $del_failed_sub_retake = "DELETE FROM tblstudent_subject WHERE id='$sub_id_del' and student_id_fk='$Studid' and curr_id_fk='$Currid' and course_id_fk='$stud_course_id'";
-                                    mysqli_query($connection,$del_failed_sub_retake);
-                                }
                             }
 
                             $select_sy = mysqli_query($connection,"SELECT * FROM tblstudent_subject WHERE id='$updateid'");
@@ -1444,63 +1432,19 @@
                                 }
                             }
                             $sql = "UPDATE tblstudent_subject SET grades='$grade',total_grades='$total_grades',school_year='$school_year_act', remarks='$Remarks' WHERE id='$updateid'";   
-                            mysqli_query($connection,$sql);
-                            $get_and_save_sub = mysqli_query($connection,"SELECT * FROM tblstudent_subject WHERE id='$updateid' and remarks='FAILED'");
-                            while($p = mysqli_fetch_array($get_and_save_sub))
+                            if(mysqli_query($connection,$sql))
                             {
-                                $sub_save_id = $p['id'];
-                                $sub_save_code = $p['subject_code'];
-                                $sub_save_des = $p['description'];
-                                $sub_save_lec = $p['lec'];
-                                $sub_save_lab = $p['lab'];
-                                $sub_save_units = $p['units'];
-                                $sub_save_yr = $p['yearlevel'];
-                                $sub_save_sem = $p['semester'];
-                                $sub_save_prereq = $p['prerequisite'];
-                                $sub_save_status = $p['status'];
-                                $sub_save_attempt = $p['attempt'];
-                                $sub_save_studid = $p['student_id_fk'];
-                                $sub_save_subidfk = $p['subject_id_fk'];
-                                $sub_save_currid = $p['curr_id_fk'];
-                                $sub_save_colid = $p['college_id_fk'];
-                                $sub_save_courseid = $p['course_id_fk'];
-                            }
-                            if($sub_save_attempt == 0)
-                            {
-                                $attempt_check = 1;
-                                $sub_save_remarks = "RETAKE";
-                                $save_attempt_sub = "INSERT INTO tblstudent_subject (subject_code,description,lec,lab,units,yearlevel,semester,prerequisite,status,remarks,attempt,student_id_fk,adviser_id_fk,subject_id_fk,curr_id_fk,college_id_fk,course_id_fk) VALUES ('$sub_save_code','$sub_save_des','$sub_save_lec','$sub_save_lab','$sub_save_units','$sub_save_yr','$sub_save_sem','$sub_save_prereq','$sub_save_status','$sub_save_remarks','$attempt_check','$sub_save_studid','$stud_adviser_id','$sub_save_subidfk','$sub_save_currid','$sub_save_colid','$sub_save_courseid')";
-                                if(mysqli_query($connection,$save_attempt_sub))
-                                {
-                                    $_SESSION['status'] = "Successfully Updated The Grades!!";
-                                    $_SESSION['status_code'] = "success";
-                                    header("location: adviser-loadsubjects.php");
-                                }
-                                else
-                                {
-                                    $_SESSION['status'] = "Unsuccessfully Updated. Please check your input or Contact the Personnel Incharge!!";
-                                    $_SESSION['status_code'] = "error";
-                                    header("location: adviser-loadsubjects.php");
-                                }
+                                $_SESSION['status'] = "Successfully Updated The Grades!!";
+                                $_SESSION['status_code'] = "success";
+                                header("location: adviser-loadsubjects.php");
                             }
                             else
                             {
-                                $attempt_check = $sub_save_attempt + 1;
-                                $sub_save_remarks = "RETAKE";
-                                $save_attempt_sub = "INSERT INTO tblstudent_subject (subject_code,description,lec,lab,units,yearlevel,semester,prerequisite,status,remarks,attempt,student_id_fk,adviser_id_fk,subject_id_fk,curr_id_fk,college_id_fk,course_id_fk) VALUES ('$sub_save_code','$sub_save_des','$sub_save_lec','$sub_save_lab','$sub_save_units','$sub_save_yr','$sub_save_sem','$sub_save_prereq','$sub_save_status','$sub_save_remarks','$attempt_check','$sub_save_studid','$stud_adviser_id','$sub_save_subidfk','$sub_save_currid','$sub_save_colid','$sub_save_courseid')";
-                                if(mysqli_query($connection,$save_attempt_sub))
-                                {
-                                    $_SESSION['status'] = "Successfully Updated The Grades!!";
-                                    $_SESSION['status_code'] = "success";
-                                    header("location: adviser-loadsubjects.php");
-                                }
-                                else
-                                {
-                                    $_SESSION['status'] = "Unsuccessfully Updated. Please check your input or Contact the Personnel Incharge!!";
-                                    $_SESSION['status_code'] = "error";
-                                    header("location: adviser-loadsubjects.php");
-                                }
+                                $_SESSION['status'] = "Unsuccessfully Updated. Please check your input or Contact the Personnel Incharge!!";
+                                $_SESSION['status_code'] = "error";
+                                header("location: adviser-loadsubjects.php");
                             }
+
                             $getisnot_failed = mysqli_query($connection,"SELECT * FROM tblstudent_subject WHERE id='$updateid' and student_id_fk='$Studid' and curri_id_fk='$Currid' and course_id_fk='$stud_course_id'");
                             foreach($getisnot_failed as $h)
                             {
