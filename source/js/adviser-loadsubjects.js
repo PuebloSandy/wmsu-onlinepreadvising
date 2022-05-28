@@ -77,20 +77,20 @@ function firsttable(){
     document.getElementById('firstYear').style.display='block'; 
     document.getElementById('secondYear').style.display='none'; 
     document.getElementById('thirdYear').style.display='none'; 
-    //document.getElementById('fourthYear').style.display='none'; 
-    //document.getElementById('fifthYear').style.display='none';
+    document.getElementById('fourthYear').style.display='none'; 
+    document.getElementById('fifthYear').style.display='none';
 
     document.getElementById('tab1').style.color = 'white'; 
     document.getElementById('tab2').style.color = 'red'; 
     document.getElementById('tab3').style.color = 'red'; 
-    //document.getElementById('tab4').style.color = 'red';
-    //document.getElementById('tab5').style.color = 'red'; 
+    document.getElementById('tab4').style.color = 'red';
+    document.getElementById('tab5').style.color = 'red'; 
 
     document.getElementById('tab1').style.backgroundColor = 'red'; 
     document.getElementById('tab2').style.backgroundColor = 'white'; 
     document.getElementById('tab3').style.backgroundColor = 'white'; 
-    //document.getElementById('tab4').style.backgroundColor = 'white';
-    //document.getElementById('tab5').style.backgroundColor = 'white';
+    document.getElementById('tab4').style.backgroundColor = 'white';
+    document.getElementById('tab5').style.backgroundColor = 'white';
 
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
@@ -200,20 +200,20 @@ function secondtable(){
     document.getElementById('firstYear').style.display='none'; 
     document.getElementById('secondYear').style.display='block'; 
     document.getElementById('thirdYear').style.display='none'; 
-    //document.getElementById('fourthYear').style.display='none'; 
-    //document.getElementById('fifthYear').style.display='none';
+    document.getElementById('fourthYear').style.display='none'; 
+    document.getElementById('fifthYear').style.display='none';
 
     document.getElementById('tab1').style.color = 'red'; 
     document.getElementById('tab2').style.color = 'white'; 
     document.getElementById('tab3').style.color = 'red'; 
-    //document.getElementById('tab4').style.color = 'red';
-    //document.getElementById('tab5').style.color = 'red'; 
+    document.getElementById('tab4').style.color = 'red';
+    document.getElementById('tab5').style.color = 'red'; 
 
     document.getElementById('tab1').style.backgroundColor = 'white'; 
     document.getElementById('tab2').style.backgroundColor = 'red'; 
     document.getElementById('tab3').style.backgroundColor = 'white'; 
-    //document.getElementById('tab4').style.backgroundColor = 'white';
-    //document.getElementById('tab5').style.backgroundColor = 'white';
+    document.getElementById('tab4').style.backgroundColor = 'white';
+    document.getElementById('tab5').style.backgroundColor = 'white';
 
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
@@ -287,6 +287,7 @@ function secondtable(){
     }
     else {
         table = $('#table21stsem').DataTable( {
+            searching: false,
             paging: false,
             ordering: false,
             info: false
@@ -298,6 +299,7 @@ function secondtable(){
     }
     else {
         table = $('#table22ndsem').DataTable( {
+            searching: false,
             paging: false,
             ordering: false,
             info: false
@@ -309,6 +311,7 @@ function secondtable(){
     }
     else {
         table = $('#table2summersem').DataTable( {
+            searching: false,
             paging: false,
             ordering: false,
             info: false
@@ -320,20 +323,20 @@ function thirdtable(){
     document.getElementById('firstYear').style.display='none'; 
     document.getElementById('secondYear').style.display='none'; 
     document.getElementById('thirdYear').style.display='block'; 
-    //document.getElementById('fourthYear').style.display='none'; 
-    //document.getElementById('fifthYear').style.display='none';
+    document.getElementById('fourthYear').style.display='none'; 
+    document.getElementById('fifthYear').style.display='none';
 
     document.getElementById('tab1').style.color = 'red'; 
     document.getElementById('tab2').style.color = 'red'; 
     document.getElementById('tab3').style.color = 'white'; 
-    //document.getElementById('tab4').style.color = 'red';
-    //document.getElementById('tab5').style.color = 'red'; 
+    document.getElementById('tab4').style.color = 'red';
+    document.getElementById('tab5').style.color = 'red'; 
 
     document.getElementById('tab1').style.backgroundColor = 'white'; 
     document.getElementById('tab2').style.backgroundColor = 'white'; 
     document.getElementById('tab3').style.backgroundColor = 'red'; 
-    //document.getElementById('tab4').style.backgroundColor = 'white';
-    //document.getElementById('tab5').style.backgroundColor = 'white';
+    document.getElementById('tab4').style.backgroundColor = 'white';
+    document.getElementById('tab5').style.backgroundColor = 'white';
 
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
@@ -407,6 +410,7 @@ function thirdtable(){
     }
     else {
         table = $('#table31stsem').DataTable( {
+            searching: false,
             paging: false,
             ordering: false,
             info: false
@@ -418,6 +422,7 @@ function thirdtable(){
     }
     else {
         table = $('#table32ndsem').DataTable( {
+            searching: false,
             paging: false,
             ordering: false,
             info: false
@@ -429,6 +434,7 @@ function thirdtable(){
     }
     else {
         table = $('#table3summersem').DataTable( {
+            searching: false,
             paging: false,
             ordering: false,
             info: false
@@ -436,4 +442,248 @@ function thirdtable(){
     }
 }
 
+function fourthtable(){
+    document.getElementById('firstYear').style.display='none'; 
+    document.getElementById('secondYear').style.display='none'; 
+    document.getElementById('thirdYear').style.display='none'; 
+    document.getElementById('fourthYear').style.display='block'; 
+    document.getElementById('fifthYear').style.display='none';
 
+    document.getElementById('tab1').style.color = 'red'; 
+    document.getElementById('tab2').style.color = 'red'; 
+    document.getElementById('tab3').style.color = 'red'; 
+    document.getElementById('tab4').style.color = 'white';
+    document.getElementById('tab5').style.color = 'red'; 
+
+    document.getElementById('tab1').style.backgroundColor = 'white'; 
+    document.getElementById('tab2').style.backgroundColor = 'white'; 
+    document.getElementById('tab3').style.backgroundColor = 'white'; 
+    document.getElementById('tab4').style.backgroundColor = 'red';
+    document.getElementById('tab5').style.backgroundColor = 'white';
+
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+
+    $(function () {
+        $(".up_4th_sem_1st").click(function () {
+            if ($(this).is(":checked")) {
+                $(".hide_4th_grade_1st").show();
+                $(".show_4th_grade_1st").hide();
+                $(".up_grade_button_4th_1st").show();
+                $('.check_4th_sem_1st').prop('checked', true);
+            } else {
+                $(".hide_4th_grade_1st").hide();
+                $(".show_4th_grade_1st").show();
+                $(".up_grade_button_4th_1st").hide();
+                $('.check_4th_sem_1st').prop('checked', false);
+            }
+        });
+        $('.up_4th_sem_1st').trigger('change');
+    });
+
+    $(function () {
+        $(".up_4th_sem_2nd").click(function () {
+            if ($(this).is(":checked")) {
+                $(".hide_4th_grade_2nd").show();
+                $(".show_4th_grade_2nd").hide();
+                $(".up_grade_button_4th_2nd").show();
+                $('.check_4th_sem_2nd').prop('checked', true);
+            } else {
+                $(".hide_4th_grade_2nd").hide();
+                $(".show_4th_grade_2nd").show();
+                $(".up_grade_button_4th_2nd").hide();
+                $('.check_4th_sem_2nd').prop('checked', false);
+            }
+        });
+        $('.up_4th_sem_2nd').trigger('change');
+    });
+
+    $(function () {
+        $(".up_4th_sem_summer").click(function () {
+            if ($(this).is(":checked")) {
+                $(".hide_4th_grade_summer").show();
+                $(".show_4th_grade_summer").hide();
+                $(".up_grade_button_4th_summer").show();
+                $('.check_4th_sem_summer').prop('checked', true);
+            } else {
+                $(".hide_4th_grade_summer").hide();
+                $(".show_4th_grade_summer").show();
+                $(".up_grade_button_4th_summer").hide();
+                $('.check_4th_sem_summer').prop('checked', false);
+            }
+        });
+        $('.up_4th_sem_summer').trigger('change');
+    });
+
+    $('#table41stsem').on('change', ':checkbox', function() {
+        $('#button_update_4th_1st').toggle(!!$('input:checkbox:checked').length);
+    });
+
+    $('#table42ndsem').on('change', ':checkbox', function() {
+        $('#button_update_4th_2nd').toggle(!!$('input:checkbox:checked').length);
+    });
+
+    $('#table4summersem').on('change', ':checkbox', function() {
+        $('#button_update_4th_summer').toggle(!!$('input:checkbox:checked').length);
+    });
+
+    if ( $.fn.dataTable.isDataTable( '#table41stsem' ) ) {
+        table = $('#table41stsem').DataTable();
+    }
+    else {
+        table = $('#table41stsem').DataTable( {
+            searching: false,
+            paging: false,
+            ordering: false,
+            info: false
+        } );
+    }
+
+    if ( $.fn.dataTable.isDataTable( '#table42ndsem' ) ) {
+        table = $('#table42ndsem').DataTable();
+    }
+    else {
+        table = $('#table42ndsem').DataTable( {
+            searching: false,
+            paging: false,
+            ordering: false,
+            info: false
+        } );
+    }
+
+    if ( $.fn.dataTable.isDataTable( '#table4summersem' ) ) {
+        table = $('#table4summersem').DataTable();
+    }
+    else {
+        table = $('#table4summersem').DataTable( {
+            searching: false,
+            paging: false,
+            ordering: false,
+            info: false
+        } );
+    }
+}
+
+function fifthtable(){
+    document.getElementById('firstYear').style.display='none'; 
+    document.getElementById('secondYear').style.display='none'; 
+    document.getElementById('thirdYear').style.display='none'; 
+    document.getElementById('fourthYear').style.display='none'; 
+    document.getElementById('fifthYear').style.display='block';
+
+    document.getElementById('tab1').style.color = 'red'; 
+    document.getElementById('tab2').style.color = 'red'; 
+    document.getElementById('tab3').style.color = 'red'; 
+    document.getElementById('tab4').style.color = 'red';
+    document.getElementById('tab5').style.color = 'white'; 
+
+    document.getElementById('tab1').style.backgroundColor = 'white'; 
+    document.getElementById('tab2').style.backgroundColor = 'white'; 
+    document.getElementById('tab3').style.backgroundColor = 'white'; 
+    document.getElementById('tab4').style.backgroundColor = 'white';
+    document.getElementById('tab5').style.backgroundColor = 'red';
+
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+
+    $(function () {
+        $(".up_5th_sem_1st").click(function () {
+            if ($(this).is(":checked")) {
+                $(".hide_5th_grade_1st").show();
+                $(".show_5th_grade_1st").hide();
+                $(".up_grade_button_5th_1st").show();
+                $('.check_5th_sem_1st').prop('checked', true);
+            } else {
+                $(".hide_5th_grade_1st").hide();
+                $(".show_5th_grade_1st").show();
+                $(".up_grade_button_5th_1st").hide();
+                $('.check_5th_sem_1st').prop('checked', false);
+            }
+        });
+        $('.up_5th_sem_1st').trigger('change');
+    });
+
+    $(function () {
+        $(".up_5th_sem_2nd").click(function () {
+            if ($(this).is(":checked")) {
+                $(".hide_5th_grade_2nd").show();
+                $(".show_5th_grade_2nd").hide();
+                $(".up_grade_button_5th_2nd").show();
+                $('.check_5th_sem_2nd').prop('checked', true);
+            } else {
+                $(".hide_5th_grade_2nd").hide();
+                $(".show_5th_grade_2nd").show();
+                $(".up_grade_button_5th_2nd").hide();
+                $('.check_5th_sem_2nd').prop('checked', false);
+            }
+        });
+        $('.up_5th_sem_2nd').trigger('change');
+    });
+
+    $(function () {
+        $(".up_5th_sem_summer").click(function () {
+            if ($(this).is(":checked")) {
+                $(".hide_5th_grade_summer").show();
+                $(".show_5th_grade_summer").hide();
+                $(".up_grade_button_5th_summer").show();
+                $('.check_5th_sem_summer').prop('checked', true);
+            } else {
+                $(".hide_5th_grade_summer").hide();
+                $(".show_5th_grade_summer").show();
+                $(".up_grade_button_5th_summer").hide();
+                $('.check_5th_sem_summer').prop('checked', false);
+            }
+        });
+        $('.up_5th_sem_summer').trigger('change');
+    });
+
+    $('#table51stsem').on('change', ':checkbox', function() {
+        $('#button_update_5th_1st').toggle(!!$('input:checkbox:checked').length);
+    });
+
+    $('#table52ndsem').on('change', ':checkbox', function() {
+        $('#button_update_5th_2nd').toggle(!!$('input:checkbox:checked').length);
+    });
+
+    $('#table5summersem').on('change', ':checkbox', function() {
+        $('#button_update_5th_summer').toggle(!!$('input:checkbox:checked').length);
+    });
+
+    if ( $.fn.dataTable.isDataTable( '#table51stsem' ) ) {
+        table = $('#table51stsem').DataTable();
+    }
+    else {
+        table = $('#table51stsem').DataTable( {
+            searching: false,
+            paging: false,
+            ordering: false,
+            info: false
+        } );
+    }
+
+    if ( $.fn.dataTable.isDataTable( '#table52ndsem' ) ) {
+        table = $('#table52ndsem').DataTable();
+    }
+    else {
+        table = $('#table52ndsem').DataTable( {
+            searching: false,
+            paging: false,
+            ordering: false,
+            info: false
+        } );
+    }
+
+    if ( $.fn.dataTable.isDataTable( '#table5summersem' ) ) {
+        table = $('#table5summersem').DataTable();
+    }
+    else {
+        table = $('#table5summersem').DataTable( {
+            searching: false,
+            paging: false,
+            ordering: false,
+            info: false
+        } );
+    }
+}
