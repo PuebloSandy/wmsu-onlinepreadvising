@@ -149,7 +149,7 @@
 
 					<div class="col-6 g-5" id="right-side">
 						<h1 class="text fw-bold fs-1 text-center mt-2 mb-3" style="cursor: default;">Welcome <span class="text-danger">Super Admin</span></h1>
-						<a class="btn btn-danger w-100 rounded-pill mb-3 text-white fs-4" href="superadmin-school-year.php"> School Year</a>
+						<!-- <a class="btn btn-danger w-100 rounded-pill mb-3 text-white fs-4" href="superadmin-school-year.php"> School Year</a> -->
 						<a class="btn btn-danger w-100 rounded-pill mb-3 text-white fs-4" href="superadmin-departments.php"><?php echo $col_row;?> Colleges</a>
 						<a class="btn btn-danger w-100 rounded-pill mb-3 text-white fs-4" href="superadmin-courses.php"><?php echo $cor_row;?> Courses</a>
 						<a class="btn btn-danger w-100 rounded-pill mb-3 text-white fs-4" href="superadmin-admin-accounts.php"><?php echo $all_total_users;?> Accounts</a>
