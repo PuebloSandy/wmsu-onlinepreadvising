@@ -139,7 +139,7 @@
                     <button type="button" class="btn rounded btn-secondary p-2 fas fa-chevron-left" title="Back" onclick="location.href='adviser-studentlists.php'"> Back</button>
                     <?php
                         $show_school_year = mysqli_query($connection,"SELECT * FROM tblschool_year WHERE status='Activated'"); 
-                        if(mysqli_num_rows($show_school_year) > 0)
+                        if(mysqli_num_rows($show_school_year) == 0)
                         {
                             $y = mysqli_fetch_array($show_school_year);
                             $sy_show = $y['school_year'];
