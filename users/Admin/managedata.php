@@ -41,11 +41,9 @@
         $c = "ALTER TABLE tblrequest_account AUTO_INCREMENT = 1";
 
         //send credentials to email
-        require_once '../../PHPMailer/PHPMailer.php';
-        require_once '../../PHPMailer/SMTP.php';
-        require_once '../../PHPMailer/Exception.php';
+        require '../../vendor/autoload.php';
         
-        $mail = new PHPMailer();
+        $mail = new PHPMailer(true);
         
         $mail->isSMTP();
         $mail->Host = 'smtp.hostinger.ph';  // Specify main and backup SMTP servers
@@ -111,11 +109,9 @@
         $d = "ALTER TABLE tblrequest_account AUTO_INCREMENT = 1";
 
         //send credentials to email
-        require_once '../../PHPMailer/PHPMailer.php';
-        require_once '../../PHPMailer/SMTP.php';
-        require_once '../../PHPMailer/Exception.php';
+        require '../../vendor/autoload.php';
         
-        $mail = new PHPMailer();
+        $mail = new PHPMailer(true);
         
         $mail->isSMTP();
         $mail->Host = 'smtp.hostinger.ph';  // Specify main and backup SMTP servers
@@ -2176,11 +2172,9 @@
             $sql="INSERT INTO `tbluser`(`firstname`, `lastname`, `email`, `password`, `usertype`, `status`, `college_id_fk`,`course_id_fk`) VALUES ('$Firstname','$Lastname','$Email','$Password','$Usertype','$Status','$CollegeID','$CourseID')";
 
             //send credentials to email
-            require_once '../../PHPMailer/PHPMailer.php';
-            require_once '../../PHPMailer/SMTP.php';
-            require_once '../../PHPMailer/Exception.php';
+            require '../../vendor/autoload.php';
             
-            $mail = new PHPMailer();
+            $mail = new PHPMailer(true);
             
             $mail->isSMTP();
             $mail->Host = 'smtp.hostinger.ph';  // Specify main and backup SMTP servers
@@ -2280,11 +2274,9 @@
             {
                 $save_pass = "UPDATE tbluser SET password='$Password' WHERE id='$adviser_id'";
                 //send credentials to email
-                require_once '../../PHPMailer/PHPMailer.php';
-                require_once '../../PHPMailer/SMTP.php';
-                require_once '../../PHPMailer/Exception.php';
+                require '../../vendor/autoload.php';
                 
-                $mail = new PHPMailer();
+                $mail = new PHPMailer(true);
                 
                 $mail->isSMTP();
                 $mail->Host = 'smtp.hostinger.ph';  // Specify main and backup SMTP servers
