@@ -764,7 +764,7 @@
                                         }
                             ?>
 								<tr style="background: <?php echo $color_tr_bg?>">
-									<td><center><input type="checkbox" name="sub_list_id[]" value="<?php echo $SubID_1st_summer?>" class="check_1st_sem_summer"></center></td>
+									<td hidden><center><input type="checkbox" name="sub_list_id[]" value="<?php echo $SubID_1st_summer?>" class="check_1st_sem_summer"></center></td>
 									<td hidden><center><?php echo $SubID_1st_summer ?></center></td>
                                     <td><center><?php echo $SubCode ?></center></td>
 									<td><center><?php echo $SubDes ?></center></td>
@@ -1457,7 +1457,7 @@
                                         }
                             ?>
 								<tr style="background: <?php echo $color_tr_bg?>">
-									<td><center><input type="checkbox" name="sub_list_id[]" value="<?php echo $SubID_2nd_summer?>" class="check_2nd_sem_summer"></center></td>
+									<td hidden><center><input type="checkbox" name="sub_list_id[]" value="<?php echo $SubID_2nd_summer?>" class="check_2nd_sem_summer"></center></td>
 									<td hidden><center><?php echo $SubID_2nd_summer ?></center></td>
                                     <td><center><?php echo $SubCode ?></center></td>
 									<td><center><?php echo $SubDes ?></center></td>
