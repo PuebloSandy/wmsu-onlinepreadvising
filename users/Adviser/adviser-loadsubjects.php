@@ -3850,6 +3850,26 @@
                             $SubPreq = $sa['prerequisite'];
 				$SubYR = $sa['yearlevel'];
 				$SubSemester = $sa['semester'];
+				if($SubYR == 1)
+				{
+					$YearLevel = "1st";
+				}
+				else if($SubYR == 2)
+				{
+					$YearLevel = "2nd";
+				}
+				else if($SubYR == 3)
+				{
+					$YearLevel = "3rd";
+				}
+				else if($SubYR == 4)
+				{
+					$YearLevel = "4th";
+				}
+				else if($SubYR == 5)
+				{
+					$YearLevel = "5th";
+				}
                         }   
             ?>
                                     <tr>
@@ -3859,7 +3879,7 @@
                                         <td><center><?php echo $SubLec?></center></td>
                                         <td><center><?php echo $SubLab?></center></td>
                                         <td><center><?php echo $SubUnits?></center></td>
-					<td><center><?php echo $SubYR?></center></td>
+					<td><center><?php echo $YearLevel?></center></td>
                                         <td><center><?php echo $SubSemester?></center></td>
                                         <td hidden><center><?php echo $SY?></center></td>
                                     </tr>
