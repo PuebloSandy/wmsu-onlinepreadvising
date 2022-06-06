@@ -350,14 +350,14 @@
         $mail->isSMTP();
         $mail->Host = 'smtp.hostinger.ph';  // Specify main and backup SMTP servers
         $mail->SMTPAuth = true;         // Enable SMTP authentication
-        $mail->Username = 'advising@wmsuccs.com';  // SMTP username
+        $mail->Username = 'support@wmsuccs.com';  // SMTP username
         $mail->Password = 'Advising123_';  // SMTP password
         $mail->Port = 465;  // TCP port to connect to
         $mail->SMTPSecure = 'ssl';  // Enable TLS encryption, ssl also accepted
         
         //email settings
         $mail->isHTML(true); // Set email format to HTML
-        $mail->setFrom('advising@wmsuccs.com','Online Pre-Advising');
+        $mail->setFrom('support@wmsuccs.com','Online Pre-Advising');
         $mail->addAddress($Student_email);  
 
         $mail->Subject = 'Online Pre-Advising';
@@ -419,14 +419,14 @@
         $mail->isSMTP();
         $mail->Host = 'smtp.hostinger.ph';  // Specify main and backup SMTP servers
         $mail->SMTPAuth = true;         // Enable SMTP authentication
-        $mail->Username = 'advising@wmsuccs.com';  // SMTP username
+        $mail->Username = 'support@wmsuccs.com';  // SMTP username
         $mail->Password = 'Advising123_';  // SMTP password
         $mail->Port = 465;  // TCP port to connect to
         $mail->SMTPSecure = 'ssl';  // Enable TLS encryption, ssl also accepted
         
         //email settings
         $mail->isHTML(true); // Set email format to HTML
-        $mail->setFrom('advising@wmsuccs.com','Online Pre-Advising');
+        $mail->setFrom('support@wmsuccs.com','Online Pre-Advising');
         $mail->addAddress($Student_email);  
 
         $mail->Subject = 'Online Pre-Advising';
@@ -691,13 +691,13 @@
                 $mail->isSMTP();
                 $mail->Host = 'smtp.hostinger.ph';  // Specify main and backup SMTP servers
                 $mail->SMTPAuth = true;         // Enable SMTP authentication
-                $mail->Username = 'advising@wmsuccs.com';  // SMTP username
+                $mail->Username = 'support@wmsuccs.com';  // SMTP username
                 $mail->Password = 'Advising123_';  // SMTP password
                 $mail->SMTPSecure = 'ssl';    // Enable TLS encryption, ssl also accepted
                 $mail->Port = 465;  // TCP port to connect to
                 
                 //email settings
-                $mail->setFrom('advising@wmsuccs.com','Online Pre-Advising');
+                $mail->setFrom('support@wmsuccs.com','Online Pre-Advising');
                 $mail->addAddress($StudEmail);  
 
                 $mail->isHTML(true); // Set email format to HTML
@@ -1817,14 +1817,14 @@ if(isset($_POST['disapproved_grades']))
     $mail->isSMTP();
     $mail->Host = 'smtp.hostinger.ph';  // Specify main and backup SMTP servers
     $mail->SMTPAuth = true;         // Enable SMTP authentication
-    $mail->Username = 'advising@wmsuccs.com';  // SMTP username
+    $mail->Username = 'support@wmsuccs.com';  // SMTP username
     $mail->Password = 'Advising123_';  // SMTP password
     $mail->Port = 465;  // TCP port to connect to
     $mail->SMTPSecure = 'ssl';  // Enable TLS encryption, ssl also accepted
     
     //email settings
     $mail->isHTML(true); // Set email format to HTML
-    $mail->setFrom('advising@wmsuccs.com','Online Pre-Advising');
+    $mail->setFrom('support@wmsuccs.com','Online Pre-Advising');
     $mail->addAddress($Student_email);  
 
     $mail->Subject = 'Online Pre-Advising';
