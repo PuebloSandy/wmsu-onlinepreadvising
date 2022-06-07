@@ -323,10 +323,16 @@
 		     if(mysqli_num_rows($get_preq) > 0)
 		     {
 			 $with = mysqli_fetch_array($get_preq);
-		         $with_preq = 1;
+		         $with_preq = $with['subject_id'];
+		     }
+		     $select_prereq_sub_fk = mysqli_query($connection,"SELECT * FROM tblstudent_subject WHERE subject_id_fk='$with_preq' and student_id_fk='$Studid' and remarks in ('FAILED','Not Yet Taken') and curr_id_fk='$Currid' and course_id_fk='$courseid'");
+		     if(mysqli_num_rows($select_prereq_sub_fk) > 0)
+		     {
+		      	 $withs = mysqli_fetch_array($select_prereq_sub_fk);
+		         $with_preqs = 1;
 		     }
 		}
-		   if($with_preq != 0)
+		   if($with_preqs != 0)
 		   {
 	    ?>
 			<div id="disable">
