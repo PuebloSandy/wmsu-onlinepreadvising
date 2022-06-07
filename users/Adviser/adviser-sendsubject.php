@@ -265,7 +265,7 @@
                             <th scope="col"><center>Units</center></th>
 			    <th ><center>Prerequisite</center></th>
                             <th ><center>Year Level</center></th>
-			    <th ><center>Status</center></th>
+			    <th ><center>Remarks</center></th>
 			    <th hidden><center>Action</center></th>
                         </tr>
 					</thead>
