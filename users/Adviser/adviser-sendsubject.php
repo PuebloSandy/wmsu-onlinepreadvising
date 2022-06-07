@@ -378,13 +378,20 @@
 		{
 		     $with = mysqli_fetch_array($get_preq);
 		     $with_preq = $with['subject_under'];
-		}
-		$select_prereq_sub_fk = mysqli_query($connection,"SELECT * FROM tblstudent_subject WHERE subject_id_fk='$with_preq' and remarks in ('FAILED','Not Yet Taken') and student_id_fk='$Studid' and curr_id_fk='$Currid' and course_id_fk='$courseid'");
-		if(mysqli_num_rows($select_prereq_sub_fk) > 0)
-		{
-	    ?>
-			<td style="background-color: #FF7F7F;"><center>Previous Subject Has A 0/FAILED Grade</center></td>
+			
+	    	     $select_prereq_sub_fk = mysqli_query($connection,"SELECT * FROM tblstudent_subject WHERE subject_id_fk='$with_preq' and remarks in ('FAILED','Not Yet Taken') and student_id_fk='$Studid' and curr_id_fk='$Currid' and course_id_fk='$courseid'");
+		     if(mysqli_num_rows($select_prereq_sub_fk) > 0)
+		     {
+            ?>
+		       <td style="background-color: #FF7F7F;"><center>Previous Subject Has A 0/FAILED Grade</center></td>
 	    <?php
+		     }
+		     else
+	             {
+	     ?>
+		      <td><center><?php echo $se['remarks'] ?></center></td>
+	     <?php
+		     }
 		}
 		else
 		{
