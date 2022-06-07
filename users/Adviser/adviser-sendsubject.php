@@ -315,6 +315,15 @@
             ?>
                     <tr>
 	    <?php
+		$get_preq = mysqli_query($connection,"SELECT * FROM tblSELECT * FROM tblprereq WHERE subject_under='$subjectID' and curri_id_fk='$Currid' and course_id_fk='$courseid'");
+		if(mysqli_nums_row($get_preq) > 0)
+		{
+		    if($subjectID && $Remarks == "Not Yet Taken" || $Remarks == "FAILED")
+	            {
+			$with = mysqli_fetch_array($get_preq);
+		        $with_preq = 1;
+		    }
+		}
 		if($with_preq > 0)
 		{
 	    ?>
