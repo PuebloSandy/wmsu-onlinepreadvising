@@ -356,20 +356,20 @@
                                     }
                                     else if($SubPreq == "HAVE")
                                     {              
-                                        $checkprereq = "SELECT count(subject_under) FROM tblprereq WHERE subject_under='$Sub_subid_1st_1st' and curri_id_fk='$Currid' and course_id_fk='$curr_courseid'";
+                                        $checkprereq = "SELECT count(subject_under) FROM tblprereq WHERE subject_under='$subjectID' and curri_id_fk='$Currid' and course_id_fk='$courseid'";
                                         $get_check = mysqli_query($connection,$checkprereq);
                                         $Rows = mysqli_fetch_array($get_check);
                                         $SubID = $Rows[0];
                                                         
                                         if($SubID == 1)
                                         {
-                                            $getpreq = "SELECT * FROM tblprereq WHERE subject_under='$Sub_subid_1st_1st' and curri_id_fk='$Currid' and course_id_fk='$curr_courseid'";
+                                            $getpreq = "SELECT * FROM tblprereq WHERE subject_under='$subjectID' and curri_id_fk='$Currid' and course_id_fk='$courseid'";
                                             $checkpreq = mysqli_query($connection,$getpreq);
                                             foreach($checkpreq as $rows)
                                             {
                                                 $new = $rows['subject_id'];    
                                             }
-                                            $getsubcode = mysqli_query($connection,"SELECT * FROM tblstudent_subject WHERE student_id_fk='$Studid' and subject_id_fk='$new' and curr_id_fk='$Currid' and course_id_fk='$curr_courseid'");
+                                            $getsubcode = mysqli_query($connection,"SELECT * FROM tblstudent_subject WHERE student_id_fk='$Studid' and subject_id_fk='$new' and curr_id_fk='$Currid' and course_id_fk='$courseid'");
                                             while($sa = mysqli_fetch_array($getsubcode))
                                             {
                                                 $subCode = $sa['subject_code'];
@@ -381,11 +381,11 @@
             ?>
                                         <td><center>
             <?php
-                                            $getpreq = mysqli_query($connection,"SELECT * FROM tblprereq WHERE subject_under='$Sub_subid_1st_1st' and curri_id_fk='$Currid' and course_id_fk='$curr_courseid'");
+                                            $getpreq = mysqli_query($connection,"SELECT * FROM tblprereq WHERE subject_under='$subjectID' and curri_id_fk='$Currid' and course_id_fk='$courseid'");
                                             foreach($getpreq as $rows)
                                             {
                                                 $news = $rows['subject_id'];     
-                                                $getsubcode = mysqli_query($connection,"SELECT * FROM tblstudent_subject WHERE student_id_fk='$Studid' and subject_id_fk='$news' and curr_id_fk='$Currid' and course_id_fk='$curr_courseid'");
+                                                $getsubcode = mysqli_query($connection,"SELECT * FROM tblstudent_subject WHERE student_id_fk='$Studid' and subject_id_fk='$news' and curr_id_fk='$Currid' and course_id_fk='$courseid'");
                                                 while($sa = mysqli_fetch_array($getsubcode))
                                                 {
                                                     print_r($sa['subject_code']);
