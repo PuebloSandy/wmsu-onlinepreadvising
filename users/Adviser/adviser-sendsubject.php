@@ -315,7 +315,7 @@
             ?>
                     <tr>
 	    <?php
-		$check_status_grade_sub = mysqli_query($connection,"SELECT * FROM tblstudent_subject WHERE student_id_fk='$Studid' and id='$subjectID' and remarks in ('FAILED','Not Yet Taken') and curr_id_fk='$Currid' and course_id_fk='$courseid'");
+		$check_status_grade_sub = mysqli_query($connection,"SELECT * FROM tblstudent_subject WHERE student_id_fk='$Studid' and remarks in ('FAILED','Not Yet Taken') and curr_id_fk='$Currid' and course_id_fk='$courseid'");
 		foreach($check_status_grade_sub as $id_sub)
 		{
 		     $Sub_id_check = $id_sub['subject_id_fk'];
@@ -326,11 +326,11 @@
 		         $with_preq = 1;
 		     }
 		}
-		   if($with_preq > 0)
+		   if($with_preq != 0)
 		   {
 	    ?>
 			<div id="disable">
-			    <td>:</td>
+			    <td><center>:</center></td>
 			</div>
 			<div id="able" style="display: none;">
 			    <td style="display: none;"><center><input type="checkbox" name="sub_id[]" id="myCheck" value="<?php echo $se['id']?>" onclick="myCheckBox()"></center></td>
