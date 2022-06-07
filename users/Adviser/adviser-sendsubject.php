@@ -327,11 +327,7 @@
 		     $with_preq = $with['subject_id'];
 		}
 		$select_prereq_sub_fk = mysqli_query($connection,"SELECT * FROM tblstudent_subject WHERE subject_id_fk='$with_preq' and student_id_fk='$Studid' and curr_id_fk='$Currid' and course_id_fk='$courseid'");
-		while($withs = mysqli_fetch_array($select_prereq_sub_fk))
-		{
-		     $with_preqs = $withs['id'];
-		}
-		   if($with_preqs != 0)
+		   if(mysqli_num_rows($select_prereq_sub_fk) > 0)
 		   {
 	    ?>
 			<div id="disable">
