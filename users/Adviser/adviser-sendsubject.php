@@ -284,7 +284,11 @@
 			if($Remarks == "Not Yet Taken" || $Remarks == "FAILED")
 			{
 			    $get_preq = mysqli_query($connection,"SELECT * FROM tblSELECT * FROM tblprereq WHERE subject_under='$subjectID' and curri_id_fk='$Currid' and course_id_fk='$courseid'");
-			    
+			    if(mysqli_nums_row($get_preq) > 0)
+			    {
+				$with = mysqli_fetch_array($get_preq);
+			    	$with_preq = $with['subject_id'];
+			    }
 			}
 			    
                         if($yearlvl == "1")
@@ -320,11 +324,11 @@
             ?>
                     <tr>
 	    <?php
-		if($Remarks == "Not Yet Taken" || $Remarks == "FAILED")
+		if($with_preq != 0)
 		{
 	    ?>
 			<div id="disable" style="display: block;">
-			    <td></td>
+			    <td>:</td>
 			</div>
 			<div id="disable" style="display: none;">
 			    <td style="display: none;"><center><input type="checkbox" name="sub_id[]" id="myCheck" value="<?php echo $se['id']?>" onclick="myCheckBox()"></center></td>
