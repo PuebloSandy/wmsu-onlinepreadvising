@@ -402,7 +402,10 @@
 								<th scope="col"><center>Lec</center></th>
 								<th scope="col"><center>Lab</center></th>
 								<th scope="col"><center>Units</center></th>
-								<th ><center>year</center></th>
+								<th ><center>Prerequisite</center></th>
+								<th ><center>Year Level</center></th>
+								<th ><center>Remarks</center></th>
+								<th ><center>Action</center></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -411,7 +414,10 @@
 								<td hidden></td>
 								<td></td>
 								<td></td>
+								<td></td>
 								<td><center>No Data Found</center></td>
+								<td></td>
+								<td></td>
 								<td></td>
 								<td></td>
 								<td></td>
