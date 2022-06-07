@@ -331,7 +331,7 @@
 		{
 		     $with_preqs = $withs['id'];
 		}
-		   if($with_preqs == $subjectID)
+		   if($with_preqs != 0)
 		   {
 	    ?>
 			<div id="disable">
