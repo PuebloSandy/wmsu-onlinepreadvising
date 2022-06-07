@@ -325,7 +325,7 @@
             ?>
                     <tr>
 	    <?php
-		if($with_preq != 0)
+		if($with_preq > 0)
 		{
 	    ?>
 			<div id="disable">
