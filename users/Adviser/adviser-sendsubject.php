@@ -328,7 +328,7 @@
 		if($with_preq != 0)
 		{
 	    ?>
-			<div id="disable" style="display: block;">
+			<div id="disable">
 			    <td>:</td>
 			</div>
 			<div id="able" style="display: none;">
