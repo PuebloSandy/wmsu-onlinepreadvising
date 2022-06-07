@@ -332,7 +332,7 @@
 		     $withs = mysqli_fetch_array($select_prereq_sub_fk);
 		     $with_preqs = $withs['id'];
 		}
-		   if($subjectID == $with_preqs)
+		   if($with_preqs == $subjectID)
 		   {
 	    ?>
 			<div id="disable">
