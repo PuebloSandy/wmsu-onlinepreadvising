@@ -389,7 +389,7 @@
                                                 while($sa = mysqli_fetch_array($getsubcode))
                                                 {
                                                     print_r($sa['subject_code']);
-                                                    echo "\n";
+                                                    echo "</br>";
                                                 }                                                
                                             }
             ?>
