@@ -281,7 +281,7 @@
 			$Grades = $se['grades'];
 			$Remarks = $se['remarks'];
 			$SubPreq = $se['prerequisite'];
-			$Sub_id_check = $id_sub['subject_id_fk'];
+			$Sub_id_check = $se['subject_id_fk'];
 			    
                         if($yearlvl == "1")
                         {
