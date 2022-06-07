@@ -393,12 +393,6 @@
 	    <?php
 	             }
 		}
-		else
-		{
-	    ?>
-			<td><center><?php echo $se['remarks'] ?></center></td>
-	    <?php
-		}
 	    ?>
 			<td hidden><center><button type="button" class="btn btn-danger">Disable</button></center></td>
                     </tr>
