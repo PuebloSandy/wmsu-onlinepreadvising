@@ -315,15 +315,18 @@
             ?>
                     <tr>
 	    <?php
-		$get_preq = mysqli_query($connection,"SELECT * FROM tblSELECT * FROM tblprereq WHERE subject_under='$subjectID' and curri_id_fk='$Currid' and course_id_fk='$courseid'");
-		if(mysqli_num_rows($get_preq) > 0)
+		$check_status_grade_sub = mysqli_query($connection,"SELECT * FROM tblstudent_subject WHERE student_id_fk='$Studid' and remarks in ('FAILED','Not Yet Taken') and  yearlevel='$yr' and semester='$sem' and curr_id_fk='$Currid' and course_id_fk='$courseid'");
+		foreach($check_status_grade_sub as $id_sub)
 		{
-		    if($subjectID && $Remarks == "Not Yet Taken" || $Remarks == "FAILED")
-	            {
-			$with = mysqli_fetch_array($get_preq);
-		        $with_preq = 1;
-		    }
+		     $Sub_id_check = $id_sub['id'];
+		     $get_preq = mysqli_query($connection,"SELECT * FROM tblSELECT * FROM tblprereq WHERE subject_under='$Sub_id_check' and curri_id_fk='$Currid' and course_id_fk='$courseid'");
+		     if(mysqli_num_rows($get_preq) > 0)
+		     {
+			 $with = mysqli_fetch_array($get_preq);
+		         $with_preq = 1;
+		     }
 		}
+		
 		if($with_preq > 0)
 		{
 	    ?>
