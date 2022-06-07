@@ -331,7 +331,7 @@
 		{
 		     $withs = mysqli_fetch_array($select_prereq_sub_fk);
 		     $with_preqs = $with['id'];
-		}
+		
 		   if($subjectID == $with_preqs)
 		   {
 	    ?>
@@ -350,6 +350,7 @@
 			<td><center><input type="checkbox" name="sub_id[]" id="myCheck" value="<?php echo $se['id']?>" onclick="myCheckBox()"></center></td>
             <?php
 		   }
+		}
 	    ?>
 			<td hidden><center><?php echo $se['id']?></center></td>
                         <td><center><?php echo $se['subject_code']?></center></td>
