@@ -278,7 +278,15 @@
                     {
 			$subjectID = $se['id'];
                         $yearlvl = $se['yearlevel'];
+			$Grades = $se['grades'];
+			$Remarks = $se['remarks'];
 			$SubPreq = $se['prerequisite'];
+			if($Remarks == "Not Yet Taken" || $Remarks == "FAILED")
+			{
+			    $get_preq = mysqli_query($connection,"SELECT * FROM tblSELECT * FROM tblprereq WHERE subject_under='$subjectID' and curri_id_fk='$Currid' and course_id_fk='$courseid'");
+			    
+			}
+			    
                         if($yearlvl == "1")
                         {
                             $yrlvl = "1st";
@@ -311,7 +319,20 @@
 						{
             ?>
                     <tr>
-						<td><center><input type="checkbox" name="sub_id[]" id="myCheck" value="<?php echo $se['id']?>" onclick="myCheckBox()"></center></td>
+	    <?php
+		if($Remarks == "Not Yet Taken" || $Remarks == "FAILED")
+		{
+	    ?>
+			<td style="display: none;"><center><input type="checkbox" name="sub_id[]" id="myCheck" value="<?php echo $se['id']?>" onclick="myCheckBox()"></center></td>
+	    <?php
+	 	}
+		else
+		{
+	    ?>
+			<td style="display: none;"><center><input type="checkbox" name="sub_id[]" id="myCheck" value="<?php echo $se['id']?>" onclick="myCheckBox()"></center></td>
+	    <?php
+		}
+	    ?>
                         <td hidden><center><?php echo $se['id']?></center></td>
                         <td><center><?php echo $se['subject_code']?></center></td>
                         <td><center><?php echo $se['description']?></center></td>
