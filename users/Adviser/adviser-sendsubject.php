@@ -323,13 +323,19 @@
 		if($Remarks == "Not Yet Taken" || $Remarks == "FAILED")
 		{
 	    ?>
-			<td style="display: none;"><center><input type="checkbox" name="sub_id[]" id="myCheck" value="<?php echo $se['id']?>" onclick="myCheckBox()"></center></td>
+			<div id="disable" style="display: block;">
+			    <td></td>
+			</div>
+			<div id="disable" style="display: none;">
+			    <td style="display: none;"><center><input type="checkbox" name="sub_id[]" id="myCheck" value="<?php echo $se['id']?>" onclick="myCheckBox()"></center></td>
+			</div>
+			
 	    <?php
 	 	}
 		else
 		{
 	    ?>
-			<td style="display: none;"><center><input type="checkbox" name="sub_id[]" id="myCheck" value="<?php echo $se['id']?>" onclick="myCheckBox()"></center></td>
+			<td><center><input type="checkbox" name="sub_id[]" id="myCheck" value="<?php echo $se['id']?>" onclick="myCheckBox()"></center></td>
 	    <?php
 		}
 	    ?>
