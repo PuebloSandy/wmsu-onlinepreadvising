@@ -266,7 +266,7 @@
 			    <th ><center>Prerequisite</center></th>
                             <th ><center>Year Level</center></th>
 			    <th ><center>Status</center></th>
-			    <th ><center>Action</center></th>
+			    <th hidden><center>Action</center></th>
                         </tr>
 					</thead>
 					<tbody>
@@ -393,7 +393,7 @@
 	    <?php
 		}
 	    ?>
-			<td><center><button type="button" class="btn btn-danger">Disable</button></center></td>
+			<td hidden><center><button type="button" class="btn btn-danger">Disable</button></center></td>
                     </tr>
             <?php
 						}
