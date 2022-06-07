@@ -271,7 +271,7 @@
 					</thead>
 					<tbody>
             <?php
-				$select_subject_sem = mysqli_query($connection,"SELECT * FROM tblstudent_subject WHERE student_id_fk='$Studid' and  yearlevel='$yr' and semester='$sem' and curr_id_fk='$Currid' and course_id_fk='$courseid'");
+		$select_subject_sem = mysqli_query($connection,"SELECT * FROM tblstudent_subject WHERE student_id_fk='$Studid' and  yearlevel='$yr' and semester='$sem' and curr_id_fk='$Currid' and course_id_fk='$courseid'");
                 if(mysqli_num_rows($select_subject_sem) > 0)
                 {
                     foreach($select_subject_sem as $se)
@@ -281,6 +281,7 @@
 			$Grades = $se['grades'];
 			$Remarks = $se['remarks'];
 			$SubPreq = $se['prerequisite'];
+			$Sub_id_check = $id_sub['subject_id_fk'];
 			    
                         if($yearlvl == "1")
                         {
@@ -314,38 +315,7 @@
 						{
             ?>
                     <tr>
-	    <?php
-		$check_status_grade_sub = mysqli_query($connection,"SELECT * FROM tblstudent_subject WHERE student_id_fk='$Studid' and remarks in ('FAILED','Not Yet Taken') and curr_id_fk='$Currid' and course_id_fk='$courseid'");
-		while($id_sub = mysqli_fetch_array($check_status_grade_sub))
-		{
-		     $Sub_id_check = $id_sub['subject_id_fk'];
-		}
-		$get_preq = mysqli_query($connection,"SELECT * FROM tblprereq WHERE subject_under='$Sub_id_check' and curri_id_fk='$Currid' and course_id_fk='$courseid'");
-		if(mysqli_num_rows($get_preq) > 0)
-		{
-		     $with = mysqli_fetch_array($get_preq);
-		     $with_preq = $with['subject_id'];
-		}
-		$select_prereq_sub_fk = mysqli_query($connection,"SELECT * FROM tblstudent_subject WHERE subject_id_fk='$with_preq' and student_id_fk='$Studid' and curr_id_fk='$Currid' and course_id_fk='$courseid'");
-		   if(mysqli_num_rows($select_prereq_sub_fk) > 0)
-		   {
-	    ?>
-			<div id="disable">
-			    <td><center>:</center></td>
-			</div>
-			<div id="able" style="display: none;">
-			    <td style="display: none;"><center><input type="checkbox" name="sub_id[]" id="myCheck" value="<?php echo $se['id']?>" onclick="myCheckBox()"></center></td>
-			</div>
-			
-	    <?php
-	 	   }
-		   else
-		   {
-	    ?>
 			<td><center><input type="checkbox" name="sub_id[]" id="myCheck" value="<?php echo $se['id']?>" onclick="myCheckBox()"></center></td>
-            <?php
-		   }
-	    ?>
 			<td hidden><center><?php echo $se['id']?></center></td>
                         <td><center><?php echo $se['subject_code']?></center></td>
                         <td><center><?php echo $se['description']?></center></td>
@@ -402,7 +372,27 @@
                                     }
 	    ?>
                         <td><center><?php echo $yrlvl?></center></td>
+	    <?php
+		$get_preq = mysqli_query($connection,"SELECT * FROM tblprereq WHERE subject_id='$Sub_id_check' and curri_id_fk='$Currid' and course_id_fk='$courseid'");
+		if(mysqli_num_rows($get_preq) > 0)
+		{
+		     $with = mysqli_fetch_array($get_preq);
+		     $with_preq = $with['subject_under'];
+		}
+		$select_prereq_sub_fk = mysqli_query($connection,"SELECT * FROM tblstudent_subject WHERE subject_id_fk='$with_preq' and remarks in ('FAILED','Not Yet Taken') and student_id_fk='$Studid' and curr_id_fk='$Currid' and course_id_fk='$courseid'");
+		if(mysqli_num_rows($select_prereq_sub_fk) > 0)
+		{
+	    ?>
+			<td class="bg-danger"><center>Previous Subject Has A 0/FAILED Grade</center></td>
+	    <?php
+		}
+		else
+		{
+	    ?>
 			<td><center><?php echo $se['remarks'] ?></center></td>
+	    <?php
+		}
+	    ?>
 			<td><center><button type="button" class="btn btn-danger">Disable</button></center></td>
                     </tr>
             <?php
