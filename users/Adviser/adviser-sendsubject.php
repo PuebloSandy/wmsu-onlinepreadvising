@@ -263,8 +263,10 @@
                             <th scope="col"><center>Lec</center></th>
                             <th scope="col"><center>Lab</center></th>
                             <th scope="col"><center>Units</center></th>
+			    <th ><center>Prerequisite</center></th>
                             <th ><center>Year Level</center></th>
-							<th ><center>Status</center></th>
+			    <th ><center>Status</center></th>
+			    <th ><center>Action</center></th>
                         </tr>
 					</thead>
 					<tbody>
@@ -274,8 +276,9 @@
                 {
                     foreach($select_subject_sem as $se)
                     {
-						$subjectID = $se['id'];
+			$subjectID = $se['id'];
                         $yearlvl = $se['yearlevel'];
+			$SubPreq = $se['prerequisite'];
                         if($yearlvl == "1")
                         {
                             $yrlvl = "1st";
@@ -315,8 +318,58 @@
                         <td><center><?php echo $se['lec']?></center></td>
                         <td><center><?php echo $se['lab']?></center></td>
                         <td><center><?php echo $se['units']?></center></td>
+	    <?php
+                                    if($SubPreq == "NONE")
+                                    {
+                                        echo '<td><center>NONE</center></td>';
+                                    }
+                                    else if($SubPreq == "HAVE")
+                                    {              
+                                        $checkprereq = "SELECT count(subject_under) FROM tblprereq WHERE subject_under='$Sub_subid_1st_1st' and curri_id_fk='$Currid' and course_id_fk='$curr_courseid'";
+                                        $get_check = mysqli_query($connection,$checkprereq);
+                                        $Rows = mysqli_fetch_array($get_check);
+                                        $SubID = $Rows[0];
+                                                        
+                                        if($SubID == 1)
+                                        {
+                                            $getpreq = "SELECT * FROM tblprereq WHERE subject_under='$Sub_subid_1st_1st' and curri_id_fk='$Currid' and course_id_fk='$curr_courseid'";
+                                            $checkpreq = mysqli_query($connection,$getpreq);
+                                            foreach($checkpreq as $rows)
+                                            {
+                                                $new = $rows['subject_id'];    
+                                            }
+                                            $getsubcode = mysqli_query($connection,"SELECT * FROM tblstudent_subject WHERE student_id_fk='$Studid' and subject_id_fk='$new' and curr_id_fk='$Currid' and course_id_fk='$curr_courseid'");
+                                            while($sa = mysqli_fetch_array($getsubcode))
+                                            {
+                                                $subCode = $sa['subject_code'];
+                                            }
+                                                echo '<td><center>'.$subCode.'</center></td>';
+                                        }
+                                        else if($SubID > 1)
+                                        {
+            ?>
+                                        <td><center>
+            <?php
+                                            $getpreq = mysqli_query($connection,"SELECT * FROM tblprereq WHERE subject_under='$Sub_subid_1st_1st' and curri_id_fk='$Currid' and course_id_fk='$curr_courseid'");
+                                            foreach($getpreq as $rows)
+                                            {
+                                                $news = $rows['subject_id'];     
+                                                $getsubcode = mysqli_query($connection,"SELECT * FROM tblstudent_subject WHERE student_id_fk='$Studid' and subject_id_fk='$news' and curr_id_fk='$Currid' and course_id_fk='$curr_courseid'");
+                                                while($sa = mysqli_fetch_array($getsubcode))
+                                                {
+                                                    print_r($sa['subject_code']);
+                                                    echo "\t";
+                                                }                                                
+                                            }
+            ?>
+                                        </center></td>
+            <?php
+                                        }
+                                    }
+	    ?>
                         <td><center><?php echo $yrlvl?></center></td>
-						<td><center><?php echo $se['remarks'] ?></center></td>
+			<td><center><?php echo $se['remarks'] ?></center></td>
+			<td><center><button type="button" class="btn btn-danger">Disable</button></center></td>
                     </tr>
             <?php
 						}
