@@ -383,7 +383,7 @@
 		     if(mysqli_num_rows($select_prereq_sub_fk) > 0)
 		     {
 	    ?>
-			<td style="background-color: #FF7F7F;"><center>Previous Subject Has A 0/FAILED Grade</center></td>	    
+			<td style="background-color: #FF9999;"><center>Previous Subject Has A 0/FAILED Grade</center></td>	    
 	    <?php
 		     }
 		     else
